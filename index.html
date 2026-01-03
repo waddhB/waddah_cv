@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>السيرة الذاتية | وضاح غالب بصه - مهندس ميكاترونكس</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css">
+    <!-- GSAP -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.4/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.4/ScrollTrigger.min.js"></script>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700&family=Open+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- شريط التنقل -->
+    <nav class="navbar navbar-expand-lg fixed-top">
+        <div class="container">
+            <a class="navbar-brand" href="#" data-en="Waddah Bassah">وضاح بصه</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item"><a class="nav-link" href="#home" data-en="Home">الرئيسية</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#about" data-en="Profile">الملف الشخصي</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#education" data-en="Education">التعليم</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#skills" data-en="Skills">المهارات</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#achievements" data-en="Achievements">الإنجازات</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#hobbies" data-en="Hobbies">الهوايات</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#contact" data-en="Contact">التواصل</a></li>
+                    <li class="nav-item">
+                        <div class="language-switcher">
+                            <button id="lang-ar" class="lang-btn active">عربي</button>
+                            <button id="lang-en" class="lang-btn">English</button>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- القسم الرئيسي -->
+    <section id="home" class="hero-section">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-lg-6">
+                    <div class="hero-content">
+                        <h1 class="hero-title" data-en="Waddah Ghaleb Bassah">وضاح غالب بصه</h1>
+                        <h2 class="hero-subtitle" data-en="Mechatronics Engineer & Web Developer">مهندس ميكاترونكس ومطور ويب</h2>
+                        <p class="hero-description" data-en="A passionate Mechatronics engineer with expertise in web development, seeking to leverage technical skills in innovative projects.">
+                            مهندس ميكاترونكس شغوف مع خبرة في تطوير الويب، أسعى لتوظيف مهاراتي التقنية في مشاريع مبتكرة.
+                        </p>
+                        <a href="#contact" class="btn btn-primary mt-3" data-en="Contact Me">تواصل معي</a>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="hero-image-container">
+                        <!-- هذه صورة افتراضية - يمكنك استبدالها بصورتك -->
+                        <div class="profile-image">
+                            <img src="WhatsApp Image 2026-01-03 at 2.48.02 AM.jpeg" alt="وضاح بصه" class="img-fluid">
+                        </div>
+                        <div class="image-frame"></div>
+                        <div class="floating-elements">
+                            <div class="floating-element el1"><i class="bi bi-cpu"></i></div>
+                            <div class="floating-element el2"><i class="bi bi-code-slash"></i></div>
+                            <div class="floating-element el3"><i class="bi bi-robot"></i></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- شريط المهارات المتحرك -->
+    <section class="skills-marquee">
+        <div class="marquee-container">
+            <div class="marquee-track">
+                <div class="marquee-item">HTML</div>
+                <div class="marquee-item">CSS</div>
+                <div class="marquee-item">JavaScript</div>
+                <div class="marquee-item">GSAP</div>
+                <div class="marquee-item">Bootstrap</div>
+                <div class="marquee-item">Flutter</div>
+                <div class="marquee-item">Firebase</div>
+                <div class="marquee-item">SolidWorks</div>
+                <div class="marquee-item">PLC Programming</div>
+                <div class="marquee-item">TIA Portal</div>
+                <div class="marquee-item">Digital Marketing</div>
+                <!-- تكرار العناصر لإنشاء تأثير مستمر -->
+                <div class="marquee-item">HTML</div>
+                <div class="marquee-item">CSS</div>
+                <div class="marquee-item">JavaScript</div>
+                <div class="marquee-item">GSAP</div>
+                <div class="marquee-item">Bootstrap</div>
+                <div class="marquee-item">Flutter</div>
+                <div class="marquee-item">Firebase</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- الملف الشخصي -->
+    <section id="about" class="section-padding">
+        <div class="container">
+            <h2 class="section-title" data-en="Profile">الملف الشخصي</h2>
+            <div class="row">
+                <div class="col-lg-8 mx-auto">
+                    <div class="profile-card">
+                        <p data-en="A graduated student from the University of Technology and Science, the major of Mechatronics. As a youth, I have ambitious to develop myself in my speciality in all the available ways as having training, working and learning. With a solid foundation in Mechatronics and a keen interest in leveraging my skills in the accounting field, I am eager to transition into a role where I can apply my analytical and technical skills to financial data analysis and business operations.">
+                            خريج من جامعة العلوم والتكنولوجيا، تخصص ميكاترونكس. كشاب، لدي طموح لتطوير نفسي في تخصصي بجميع الطرق المتاحة مثل التدريب والعمل والتعلم. مع أساس متين في الميكاترونيكس واهتمام كبير في توظيف مهاراتي في مجال المحاسبة، أنا حريص على الانتقال إلى دور حيث يمكنني تطبيق مهاراتي التحليلية والفنية على تحليل البيانات المالية وعمليات الأعمال.
+                        </p>
+                        <div class="personal-details mt-4">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <p><strong data-en="Date of Birth">تاريخ الميلاد:</strong> <span data-en="December 16, 2000">16 ديسمبر 2000</span></p>
+                                    <p><strong data-en="Gender">الجنس:</strong> <span data-en="Male">ذكر</span></p>
+                                    <p><strong data-en="Nationality">الجنسية:</strong> <span data-en="Yemeni">يمني</span></p>
+                                </div>
+                                <div class="col-md-6">
+                                    <p><strong data-en="Email">البريد الإلكتروني:</strong> wadhahbassah@hotmail.com</p>
+                                    <p><strong data-en="Phone">الهاتف:</strong>967775852585+</p>
+                                    <p><strong data-en="Address">العنوان:</strong> <span data-en="Dairy ST. Sana'a">شارع دياري، صنعاء</span></p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- التعليم -->
+    <section id="education" class="section-padding bg-light">
+        <div class="container">
+            <h2 class="section-title" data-en="Education">التعليم</h2>
+            <div class="row">
+                <div class="col-lg-10 mx-auto">
+                    <div class="education-item">
+                        <h3 data-en="Bachelor of Mechatronics">بكالوريوس ميكاترونكس</h3>
+                        <h4 data-en="University of Technology and Science, Sana'a">جامعة العلوم والتكنولوجيا، صنعاء</h4>
+                        <p class="text-muted" data-en="The most important subjects studied at university were PLC, AI, and Electrical Systems Protection.">
+                            أهم المواد التي تمت دراستها في الجامعة كانت PLC والذكاء الاصطناعي وحماية الأنظمة الكهربائية.
+                        </p>
+                        <ul class="education-details">
+                            <li data-en="Developed analytical and problem-solving skills through complex system integration in mechatronics.">
+                                طورت مهارات تحليلية وحل المشكلات من خلال تكامل الأنظمة المعقدة في الميكاترونيكس.
+                            </li>
+                            <li data-en="Gained hands-on experience with programmable logic controllers (PLC) for automation processes.">
+                                اكتسبت خبرة عملية مع وحدات التحكم المنطقية القابلة للبرمجة (PLC) لعمليات الأتمتة.
+                            </li>
+                            <li data-en="Studied artificial intelligence (AI) techniques applicable to engineering and technology solutions.">
+                                درست تقنيات الذكاء الاصطناعي (AI) القابلة للتطبيق على حلول الهندسة والتكنولوجيا.
+                            </li>
+                            <li data-en="Learned the principles of electrical systems protection to ensure safety and reliability.">
+                                تعلمت مبادئ حماية الأنظمة الكهربائية لضمان السلامة والموثوقية.
+                            </li>
+                            <li data-en="Acquired knowledge in sensors and actuators for advanced mechatronic systems.">
+                                اكتسبت معرفة في أجهزة الاستشعار والمشغلات لأنظمة الميكاترونيكس المتقدمة.
+                            </li>
+                            <li data-en="Completed projects involving the design and implementation of robotic systems.">
+                                أكملت مشاريع تتضمن تصميم وتنفيذ الأنظمة الروبوتية.
+                            </li>
+                        </ul>
+                    </div>
+                    
+                    <div class="education-item mt-5">
+                        <h3 data-en="High School">المدرسة الثانوية</h3>
+                        <h4 data-en="Ibn Maged School, Sana'a - Scientific Section">مدرسة ابن ماجد، صنعاء - القسم العلمي</h4>
+                        <ul class="education-details">
+                            <li data-en="Achieved strong foundational knowledge in mathematics, physics, and chemistry essential for scientific sections.">
+                                حققت معرفة أساسية قوية في الرياضيات والفيزياء والكيمياء الضرورية للأقسام العلمية.
+                            </li>
+                            <li data-en="Participated in advanced placement courses enhancing understanding of scientific concepts.">
+                                شاركت في دورات متقدمة عززت فهم المفاهيم العلمية.
+                            </li>
+                            <li data-en="Developed proficiency in statistical analysis and data interpretation in scientific contexts.">
+                                طورت الكفاءة في التحليل الإحصائي وتفسير البيانات في السياقات العلمية.
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- المهارات -->
+    <section id="skills" class="section-padding">
+        <div class="container">
+            <h2 class="section-title" data-en="Skills">المهارات</h2>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="skill-category">
+                        <h3 data-en="Technical Skills">المهارات التقنية</h3>
+                        <div class="skill-item">
+                            <span data-en="Microsoft Office Programs">برامج Microsoft Office</span>
+                            <div class="skill-bar">
+                                <div class="skill-level" style="width: 90%"></div>
+                            </div>
+                        </div>
+                        <div class="skill-item">
+                            <span data-en="ETAP Program">برنامج ETAP</span>
+                            <div class="skill-bar">
+                                <div class="skill-level" style="width: 80%"></div>
+                            </div>
+                        </div>
+                        <div class="skill-item">
+                            <span data-en="ESTS Program">برنامج ESTS</span>
+                            <div class="skill-bar">
+                                <div class="skill-level" style="width: 75%"></div>
+                            </div>
+                        </div>
+                        <div class="skill-item">
+                            <span data-en="SolidWorks Program">برنامج SolidWorks</span>
+                            <div class="skill-bar">
+                                <div class="skill-level" style="width: 85%"></div>
+                            </div>
+                        </div>
+                        <div class="skill-item">
+                            <span data-en="Multisim Program">برنامج Multisim</span>
+                            <div class="skill-bar">
+                                <div class="skill-level" style="width: 70%"></div>
+                            </div>
+                        </div>
+                        <div class="skill-item">
+                            <span data-en="TIA Portal V13 Siemens Program">برنامج TIA Portal V13 Siemens</span>
+                            <div class="skill-bar">
+                                <div class="skill-level" style="width: 80%"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-md-6">
+                    <div class="skill-category">
+                        <h3 data-en="Programming Skills">مهارات البرمجة</h3>
+                        <div class="skill-item">
+                            <span>HTML & CSS</span>
+                            <div class="skill-bar">
+                                <div class="skill-level" style="width: 95%"></div>
+                            </div>
+                        </div>
+                        <div class="skill-item">
+                            <span>JavaScript</span>
+                            <div class="skill-bar">
+                                <div class="skill-level" style="width: 90%"></div>
+                            </div>
+                        </div>
+                        <div class="skill-item">
+                            <span>GSAP</span>
+                            <div class="skill-bar">
+                                <div class="skill-level" style="width: 85%"></div>
+                            </div>
+                        </div>
+                        <div class="skill-item">
+                            <span>Bootstrap</span>
+                            <div class="skill-bar">
+                                <div class="skill-level" style="width: 90%"></div>
+                            </div>
+                        </div>
+                        <div class="skill-item">
+                            <span>Flutter</span>
+                            <div class="skill-bar">
+                                <div class="skill-level" style="width: 75%"></div>
+                            </div>
+                        </div>
+                        <div class="skill-item">
+                            <span>Firebase</span>
+                            <div class="skill-bar">
+                                <div class="skill-level" style="width: 70%"></div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="skill-category mt-4">
+                        <h3 data-en="Soft Skills">المهارات الشخصية</h3>
+                        <div class="skill-tags">
+                            <span class="skill-tag" data-en="Management Skills">مهارات الإدارة</span>
+                            <span class="skill-tag" data-en="Creativity">الإبداع</span>
+                            <span class="skill-tag" data-en="Punctuality">الالتزام بالمواعيد</span>
+                            <span class="skill-tag" data-en="Leadership">القيادة</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- اللغات -->
+            <div class="row mt-5">
+                <div class="col-lg-8 mx-auto">
+                    <div class="skill-category">
+                        <h3 data-en="Languages">اللغات</h3>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="language-item">
+                                    <span data-en="Arabic">العربية</span>
+                                    <div class="language-level">
+                                        <div class="dot filled"></div>
+                                        <div class="dot filled"></div>
+                                        <div class="dot filled"></div>
+                                        <div class="dot filled"></div>
+                                        <div class="dot filled"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="language-item">
+                                    <span data-en="English">الإنجليزية</span>
+                                    <div class="language-level">
+                                        <div class="dot filled"></div>
+                                        <div class="dot filled"></div>
+                                        <div class="dot filled"></div>
+                                        <div class="dot filled"></div>
+                                        <div class="dot"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- الإنجازات -->
+    <section id="achievements" class="section-padding bg-light">
+        <div class="container">
+            <h2 class="section-title" data-en="Achievements">الإنجازات</h2>
+            <div class="row">
+                <div class="col-lg-8 mx-auto">
+                    <div class="achievement-card">
+                        <h3 data-en="Making 3D Multicolor Printer">تصنيع طابعة ثلاثية الأبعاد متعددة الألوان</h3>
+                        <ul class="achievement-details">
+                            <li data-en="Gained expertise in electrical systems protection, successfully implementing safety protocols that minimized downtime.">
+                                اكتسبت خبرة في حماية الأنظمة الكهربائية، وتنفيذ بروتوكولات السلامة بنجاح مما قلل من وقت التوقف.
+                            </li>
+                            <li data-en="Implemented a multicolor filament change system for the 3D printer, improving print quality and efficiency.">
+                                قمت بتنفيذ نظام تغيير خيوط متعدد الألوان للطابعة ثلاثية الأبعاد، مما أدى إلى تحسين جودة الطباعة وكفاءتها.
+                            </li>
+                            <li data-en="Developed a multi-filament system enabling seamless color transitions in 3D printing, enhancing aesthetic appeal and creative applications.">
+                                طورت نظام خيوط متعدد يمكن من التحول السلس بين الألوان في الطباعة ثلاثية الأبعاد، مما يعزز الجاذبية الجمالية والتطبيقات الإبداعية.
+                            </li>
+                        </ul>
+                        <div class="achievement-image mt-4">
+                            <!-- صورة افتراضية للإنجاز -->
+                            <img src="https://images.unsplash.com/photo-1581094794329-c8112a89af12?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80" alt="3D Printer" class="img-fluid rounded">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- الهوايات -->
+    <section id="hobbies" class="section-padding">
+        <div class="container">
+            <h2 class="section-title" data-en="Hobbies">الهوايات</h2>
+            <div class="row">
+                <div class="col-lg-8 mx-auto">
+                    <div class="hobbies-container">
+                        <div class="hobby-card">
+                            <div class="hobby-icon">
+                                <i class="bi bi-heart-fill"></i>
+                            </div>
+                            <h4 data-en="Volunteering for community service">التطوع لخدمة المجتمع</h4>
+                        </div>
+                        <div class="hobby-card">
+                            <div class="hobby-icon">
+                                <i class="bi bi-laptop"></i>
+                            </div>
+                            <h4 data-en="Exploring new technologies">استكشاف التقنيات الجديدة</h4>
+                        </div>
+                        <div class="hobby-card">
+                            <div class="hobby-icon">
+                                <i class="bi bi-puzzle"></i>
+                            </div>
+                            <h4 data-en="Solving puzzles and riddles">حل الألغاز والأحجيات</h4>
+                        </div>
+                        <div class="hobby-card">
+                            <div class="hobby-icon">
+                                <i class="bi bi-translate"></i>
+                            </div>
+                            <h4 data-en="Learning new languages">تعلم لغات جديدة</h4>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- التواصل -->
+    <section id="contact" class="section-padding bg-dark text-light">
+        <div class="container">
+            <h2 class="section-title text-light" data-en="Contact">التواصل</h2>
+            <div class="row">
+                <div class="col-lg-8 mx-auto">
+                    <div class="contact-info">
+                        <div class="contact-item">
+                            <i class="bi bi-envelope"></i>
+                            <div>
+                                <h5 data-en="Email">البريد الإلكتروني</h5>
+                                <p>wadhahbassah@hotmail.com</p>
+                            </div>
+                        </div>
+                        <div class="contact-item">
+                            <i class="bi bi-phone"></i>
+                            <div>
+                                <h5 data-en="Phone">الهاتف</h5>
+                                <p>967775852585+</p>
+                            </div>
+                        </div>
+                        <div class="contact-item">
+                            <i class="bi bi-geo-alt"></i>
+                            <div>
+                                <h5 data-en="Address">العنوان</h5>
+                                <p data-en="Dairy ST. Sana'a">شارع دياري، صنعاء، اليمن</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- الفوتر -->
+    <footer class="footer">
+        <div class="container">
+            <p class="mb-0" data-en="&copy; 2023 Waddah Bassah. All rights reserved.">
+                &copy; 2023 وضاح بصه. جميع الحقوق محفوظة.
+            </p>
+        </div>
+    </footer>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- ملف JS الخاص -->
+    <script src="script.js"></script>
+</body>
+</html>
