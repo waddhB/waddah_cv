@@ -1,687 +1,1278 @@
-// تهيئة GSAP للرسوم المتحركة
-document.addEventListener('DOMContentLoaded', function() {
-    // تهيئة GSAP مع ScrollTrigger
-    gsap.registerPlugin(ScrollTrigger);
-    
-    // الرسوم المتحركة للشريط العلوي
-    gsap.from('.navbar', {
-        duration: 1,
-        y: -100,
-        opacity: 0,
-        ease: 'power3.out'
-    });
-    
-    // الرسوم المتحركة للمحتوى الرئيسي
-    gsap.from('.hero-title', {
-        duration: 1.2,
-        y: 50,
-        opacity: 0,
-        delay: 0.5,
-        ease: 'power3.out'
-    });
-    
-    gsap.from('.hero-subtitle', {
-        duration: 1.2,
-        y: 50,
-        opacity: 0,
-        delay: 0.7,
-        ease: 'power3.out'
-    });
-    
-    gsap.from('.hero-description', {
-        duration: 1.2,
-        y: 50,
-        opacity: 0,
-        delay: 0.9,
-        ease: 'power3.out'
-    });
-    
-    gsap.from('.profile-image', {
-        duration: 1.5,
-        scale: 0.8,
-        opacity: 0,
-        delay: 1,
-        ease: 'back.out(1.7)'
-    });
-    
-    gsap.from('.image-frame', {
-        duration: 1.5,
-        scale: 0.8,
-        opacity: 0,
-        delay: 1.2,
-        ease: 'back.out(1.7)'
-    });
-    
-    // الرسوم المتحركة للعناصر العائمة
-    gsap.from('.floating-element', {
-        duration: 1,
-        scale: 0,
-        opacity: 0,
-        stagger: 0.3,
-        delay: 1.5,
-        ease: 'back.out(1.7)'
-    });
-    
-    // الرسوم المتحركة للعناصر عند التمرير
-    gsap.utils.toArray('.profile-card, .education-item, .skill-category, .achievement-card, .hobby-card').forEach(element => {
-        gsap.from(element, {
-            scrollTrigger: {
-                trigger: element,
-                start: 'top 80%',
-                end: 'bottom 20%',
-                toggleActions: 'play none none reverse'
-            },
-            duration: 1,
-            y: 50,
-            opacity: 0,
-            ease: 'power3.out'
-        });
-    });
-    
-    // الرسوم المتحركة لأشرطة المهارات
-    gsap.utils.toArray('.skill-level').forEach(bar => {
-        const width = bar.style.width;
-        bar.style.width = '0%';
-        
-        gsap.to(bar, {
-            scrollTrigger: {
-                trigger: bar.parentElement.parentElement,
-                start: 'top 80%',
-                end: 'bottom 20%',
-                toggleActions: 'play none none reverse'
-            },
-            duration: 1.5,
-            width: width,
-            ease: 'power3.out'
-        });
-    });
-    
-    // إدارة تغيير اللغة
-    const langArBtn = document.getElementById('lang-ar');
-    const langEnBtn = document.getElementById('lang-en');
-    const body = document.body;
-    
-    // تعيين اللغة الافتراضية (العربية)
-    let currentLang = 'ar';
-    
-    // دالة لتغيير اللغة
-    function switchLanguage(lang) {
-        currentLang = lang;
-        
-        // تغيير اتجاه الصفحة
-        if (lang === 'ar') {
-            body.setAttribute('dir', 'rtl');
-            body.style.textAlign = 'right';
-            document.documentElement.lang = 'ar';
-        } else {
-            body.setAttribute('dir', 'ltr');
-            body.style.textAlign = 'left';
-            document.documentElement.lang = 'en';
-        }
-        
-        // تحديث النصوص
-        document.querySelectorAll('[data-en]').forEach(element => {
-            if (lang === 'en') {
-                if (element.tagName === 'INPUT' || element.tagName === 'TEXTAREA') {
-                    element.placeholder = element.getAttribute('data-en');
-                } else {
-                    // حفظ النص العربي الأصلي إذا لم يتم حفظه مسبقاً
-                    if (!element.hasAttribute('data-ar')) {
-                        element.setAttribute('data-ar', element.textContent);
-                    }
-                    element.textContent = element.getAttribute('data-en');
-                }
-            } else {
-                // استعادة النص العربي من سمة data-ar
-                if (element.hasAttribute('data-ar')) {
-                    element.textContent = element.getAttribute('data-ar');
-                }
-            }
-        });
-        
-        // تحديث أزرار اللغة
-        if (lang === 'ar') {
-            langArBtn.classList.add('active');
-            langEnBtn.classList.remove('active');
-            langArBtn.textContent = 'عربي';
-            langEnBtn.textContent = 'English';
-        } else {
-            langEnBtn.classList.add('active');
-            langArBtn.classList.remove('active');
-            langArBtn.textContent = 'Arabic';
-            langEnBtn.textContent = 'English';
-        }
-        
-        // تحديث عنوان الصفحة
-        if (lang === 'en') {
-            document.title = "CV | Waddah Bassah - Mechatronics Engineer";
-        } else {
-            document.title = "السيرة الذاتية | وضاح بصه - مهندس ميكاترونكس";
-        }
-        
-        // إعادة توجيه اتجاه شريط المهارات المتحرك
-        const marqueeTrack = document.querySelector('.marquee-track');
-        if (marqueeTrack) {
-            if (lang === 'ar') {
-                marqueeTrack.style.animation = 'marquee-rtl 30s linear infinite';
-            } else {
-                marqueeTrack.style.animation = 'marquee-ltr 30s linear infinite';
-            }
-        }
+:root {
+    --primary-color: #2c3e50;
+    --secondary-color: #3498db;
+    --accent-color: #e74c3c;
+    --light-color: #ecf0f1;
+    --dark-color: #2c3e50;
+    --text-color: #222;
+    --text-light: #555;
+    --shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    --transition: all 0.3s ease;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    font-size: 16px;
+}
+
+@media (max-width: 768px) {
+    html {
+        font-size: 15px;
+    }
+}
+
+@media (max-width: 480px) {
+    html {
+        font-size: 14px;
+    }
+}
+
+body {
+    font-family: 'Cairo', 'Open Sans', sans-serif;
+    line-height: 1.8;
+    color: var(--text-color);
+    overflow-x: hidden;
+    direction: rtl;
+    opacity: 0;
+    font-weight: 400;
+    text-rendering: optimizeLegibility;
+    letter-spacing: 0.2px;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+body[dir="ltr"] {
+    direction: ltr;
+    text-align: left;
+}
+
+body[dir="ltr"] .skills-marquee .marquee-track {
+    animation: marquee-ltr 30s linear infinite;
+}
+
+body[dir="ltr"] .marquee-item:after {
+    right: auto;
+    left: -5px;
+}
+
+/* شريط التنقل */
+.navbar {
+    background-color: rgba(255, 255, 255, 0.98);
+    box-shadow: var(--shadow);
+    padding: 0.8rem 0;
+    transition: var(--transition);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+    position: fixed;
+    width: 100%;
+    top: 0;
+    z-index: 1000;
+}
+
+@media (max-width: 768px) {
+    .navbar {
+        padding: 0.5rem 0;
+    }
+}
+
+.navbar-brand {
+    font-weight: 700;
+    font-size: 1.5rem;
+    color: var(--primary-color);
+    letter-spacing: 0.5px;
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
+    padding: 0.5rem 0;
+    white-space: nowrap;
+}
+
+@media (max-width: 768px) {
+    .navbar-brand {
+        font-size: 1.3rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .navbar-brand {
+        font-size: 1.1rem;
+    }
+}
+
+.nav-link {
+    font-weight: 600;
+    margin: 0 0.8rem;
+    color: var(--dark-color);
+    transition: var(--transition);
+    position: relative;
+    font-size: 1rem;
+    letter-spacing: 0.3px;
+    padding: 0.5rem 0.3rem !important;
+    white-space: nowrap;
+}
+
+@media (max-width: 992px) {
+    .nav-link {
+        margin: 0.3rem 0;
+        padding: 0.8rem 1rem !important;
+        text-align: center;
+        width: 100%;
+    }
+}
+
+.nav-link:hover {
+    color: var(--secondary-color);
+}
+
+.nav-link:after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    width: 0;
+    height: 3px;
+    background-color: var(--secondary-color);
+    transition: var(--transition);
+    border-radius: 2px;
+}
+
+.nav-link:hover:after {
+    width: 100%;
+}
+
+body[dir="ltr"] .nav-link:after {
+    right: auto;
+    left: 0;
+}
+
+.navbar-toggler {
+    border: none;
+    font-size: 1.5rem;
+    padding: 0.5rem;
+    margin-right: 0.5rem;
+    width: 44px;
+    height: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+@media (max-width: 480px) {
+    .navbar-toggler {
+        width: 40px;
+        height: 40px;
+        font-size: 1.3rem;
+    }
+}
+
+.language-switcher {
+    display: flex;
+    margin-right: 1rem;
+    margin-left: auto;
+}
+
+@media (max-width: 992px) {
+    .language-switcher {
+        margin: 1rem auto;
+        justify-content: center;
+        order: 3;
+        width: 100%;
+    }
+}
+
+body[dir="ltr"] .language-switcher {
+    margin-right: 0;
+    margin-left: 1rem;
+}
+
+@media (max-width: 992px) {
+    body[dir="ltr"] .language-switcher {
+        margin-left: auto;
+        margin-right: auto;
+    }
+}
+
+.lang-btn {
+    background: none;
+    border: 2px solid #ddd;
+    padding: 0.5rem 1.2rem;
+    cursor: pointer;
+    transition: var(--transition);
+    font-family: 'Cairo', 'Open Sans', sans-serif;
+    font-weight: 600;
+    font-size: 0.9rem;
+    letter-spacing: 0.5px;
+    min-width: 80px;
+    height: 38px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+@media (max-width: 480px) {
+    .lang-btn {
+        min-width: 70px;
+        padding: 0.4rem 1rem;
+        font-size: 0.85rem;
+        height: 36px;
+    }
+}
+
+.lang-btn.active {
+    background-color: var(--secondary-color);
+    color: white;
+    border-color: var(--secondary-color);
+    box-shadow: 0 3px 10px rgba(52, 152, 219, 0.3);
+}
+
+.lang-btn:first-child {
+    border-radius: 0 8px 8px 0;
+    border-left: none;
+}
+
+body[dir="ltr"] .lang-btn:first-child {
+    border-radius: 8px 0 0 8px;
+    border-left: 2px solid #ddd;
+    border-right: none;
+}
+
+.lang-btn:last-child {
+    border-radius: 8px 0 0 8px;
+    border-right: none;
+}
+
+body[dir="ltr"] .lang-btn:last-child {
+    border-radius: 0 8px 8px 0;
+    border-right: 2px solid #ddd;
+    border-left: none;
+}
+
+/* القسم الرئيسي */
+.hero-section {
+    padding: 8rem 0 6rem;
+    background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+    overflow: hidden;
+    position: relative;
+    margin-top: 60px; /* تعويض للشريط الثابت */
+    min-height: calc(100vh - 60px);
+    display: flex;
+    align-items: center;
+}
+
+@media (max-width: 768px) {
+    .hero-section {
+        padding: 6rem 0 4rem;
+        margin-top: 56px;
+        min-height: auto;
+    }
+}
+
+@media (max-width: 480px) {
+    .hero-section {
+        padding: 4rem 0 3rem;
+        margin-top: 50px;
+    }
+}
+
+.hero-title {
+    font-size: clamp(2rem, 5vw, 4rem);
+    font-weight: 800;
+    color: var(--primary-color);
+    margin-bottom: 1.2rem;
+    line-height: 1.2;
+    letter-spacing: 1px;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+}
+
+.hero-subtitle {
+    font-size: clamp(1.2rem, 3vw, 2.2rem);
+    color: var(--secondary-color);
+    margin-bottom: 1.5rem;
+    font-weight: 700;
+    letter-spacing: 0.8px;
+}
+
+.hero-description {
+    font-size: clamp(1rem, 1.8vw, 1.4rem);
+    color: var(--text-light);
+    max-width: 700px;
+    margin-bottom: 2rem;
+    font-weight: 500;
+    line-height: 1.7;
+}
+
+.hero-image-container {
+    position: relative;
+    max-width: 100%;
+    width: 100%;
+    margin: 0 auto;
+    padding: 0 1rem;
+}
+
+@media (max-width: 768px) {
+    .hero-image-container {
+        margin-top: 3rem;
+        max-width: 400px;
+    }
+}
+
+@media (max-width: 480px) {
+    .hero-image-container {
+        margin-top: 2rem;
+        max-width: 300px;
+    }
+}
+
+.profile-image {
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: var(--shadow);
+    position: relative;
+    z-index: 2;
+    transform-origin: center;
+    border: 8px solid white;
+    width: 100%;
+    height: auto;
+    aspect-ratio: 1/1;
+}
+
+.profile-image img {
+    width: 100%;
+    height: 100%;
+    display: block;
+    transition: transform 0.5s ease;
+    object-fit: cover;
+}
+
+.profile-image:hover img {
+    transform: scale(1.05);
+}
+
+.image-frame {
+    position: absolute;
+    top: -20px;
+    right: -20px;
+    width: 100%;
+    height: 100%;
+    border: 8px solid var(--secondary-color);
+    border-radius: 20px;
+    z-index: 1;
+    opacity: 0.8;
+}
+
+@media (max-width: 768px) {
+    .image-frame {
+        top: -15px;
+        right: -15px;
+        border-width: 6px;
+    }
+}
+
+@media (max-width: 480px) {
+    .image-frame {
+        top: -10px;
+        right: -10px;
+        border-width: 5px;
+    }
+}
+
+body[dir="ltr"] .image-frame {
+    right: auto;
+    left: -20px;
+}
+
+@media (max-width: 768px) {
+    body[dir="ltr"] .image-frame {
+        left: -15px;
+    }
+}
+
+@media (max-width: 480px) {
+    body[dir="ltr"] .image-frame {
+        left: -10px;
+    }
+}
+
+.floating-elements {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    z-index: 3;
+    pointer-events: none;
+}
+
+.floating-element {
+    position: absolute;
+    width: clamp(40px, 6vw, 60px);
+    height: clamp(40px, 6vw, 60px);
+    background-color: var(--accent-color);
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: clamp(1.2rem, 2vw, 1.8rem);
+    box-shadow: 0 8px 25px rgba(231, 76, 60, 0.3);
+    pointer-events: none;
+    border: 3px solid white;
+}
+
+.el1 {
+    top: 5%;
+    left: 5%;
+    animation: float 6s ease-in-out infinite;
+}
+
+.el2 {
+    top: 65%;
+    right: 5%;
+    animation: float 8s ease-in-out infinite 1s;
+}
+
+.el3 {
+    bottom: 15%;
+    left: 15%;
+    animation: float 7s ease-in-out infinite 0.5s;
+}
+
+@media (max-width: 768px) {
+    .floating-element {
+        display: none;
+    }
+}
+
+/* شريط المهارات المتحرك */
+.skills-marquee {
+    background: linear-gradient(90deg, var(--primary-color), #34495e);
+    color: white;
+    padding: 1.2rem 0;
+    overflow: hidden;
+    position: relative;
+    font-weight: 600;
+}
+
+.marquee-container {
+    width: 100%;
+    overflow: hidden;
+    position: relative;
+}
+
+.marquee-track {
+    display: flex;
+    animation: marquee-rtl 30s linear infinite;
+    white-space: nowrap;
+    will-change: transform;
+    padding: 0.5rem 0;
+}
+
+.marquee-item {
+    padding: 0.5rem clamp(1rem, 3vw, 2rem);
+    font-size: clamp(0.9rem, 1.5vw, 1.3rem);
+    font-weight: 700;
+    color: white;
+    flex-shrink: 0;
+    position: relative;
+    transition: var(--transition);
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
+    white-space: nowrap;
+}
+
+.marquee-item:hover {
+    color: var(--secondary-color);
+    transform: translateY(-3px);
+}
+
+.marquee-item:after {
+    content: "•";
+    position: absolute;
+    right: -8px;
+    color: var(--secondary-color);
+    font-size: 1.5rem;
+}
+
+@keyframes marquee-rtl {
+    0% {
+        transform: translateX(0);
+    }
+    100% {
+        transform: translateX(50%);
+    }
+}
+
+@keyframes marquee-ltr {
+    0% {
+        transform: translateX(-50%);
+    }
+    100% {
+        transform: translateX(0);
+    }
+}
+
+@keyframes float {
+    0%, 100% {
+        transform: translateY(0) rotate(0deg);
+    }
+    50% {
+        transform: translateY(-25px) rotate(5deg);
+    }
+}
+
+/* الأقسام العامة */
+.section-padding {
+    padding: clamp(4rem, 8vw, 8rem) 1rem;
+}
+
+.section-title {
+    font-size: clamp(1.8rem, 4vw, 3rem);
+    font-weight: 800;
+    text-align: center;
+    margin-bottom: clamp(2rem, 4vw, 4rem);
+    color: var(--primary-color);
+    position: relative;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    padding: 0 1rem;
+}
+
+.section-title:after {
+    content: '';
+    position: absolute;
+    bottom: -1.2rem;
+    left: 50%;
+    transform: translateX(-50%);
+    width: clamp(60px, 10vw, 100px);
+    height: 5px;
+    background: linear-gradient(90deg, var(--secondary-color), var(--accent-color));
+    border-radius: 3px;
+}
+
+.bg-light {
+    background-color: #f8f9fa;
+}
+
+.bg-dark {
+    background-color: var(--primary-color);
+}
+
+/* البطاقات */
+.profile-card, .education-item, .achievement-card {
+    background-color: white;
+    border-radius: 20px;
+    padding: clamp(1.5rem, 3vw, 2.5rem);
+    box-shadow: var(--shadow);
+    transition: var(--transition);
+    position: relative;
+    overflow: hidden;
+    border: 1px solid rgba(0, 0, 0, 0.05);
+    width: 100%;
+    margin: 0 auto;
+}
+
+.profile-card:before, .education-item:before, .achievement-card:before {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 100%;
+    height: 5px;
+    background: linear-gradient(90deg, var(--secondary-color), var(--accent-color));
+    transform: translateX(-100%);
+    transition: var(--transition);
+}
+
+.profile-card:hover:before, .education-item:hover:before, .achievement-card:hover:before {
+    transform: translateX(0);
+}
+
+.profile-card:hover, .education-item:hover, .achievement-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+}
+
+@media (max-width: 768px) {
+    .profile-card:hover, .education-item:hover, .achievement-card:hover {
+        transform: translateY(-5px);
+    }
+}
+
+/* المهارات */
+.skill-category {
+    margin-bottom: clamp(2rem, 4vw, 3rem);
+    width: 100%;
+}
+
+.skill-category h3 {
+    font-size: clamp(1.3rem, 2.5vw, 1.8rem);
+    margin-bottom: 1.5rem;
+    color: var(--primary-color);
+    border-right: 5px solid var(--secondary-color);
+    padding-right: 1.2rem;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    word-break: break-word;
+}
+
+@media (max-width: 768px) {
+    .skill-category h3 {
+        border-right-width: 4px;
+        padding-right: 1rem;
+    }
+}
+
+body[dir="ltr"] .skill-category h3 {
+    border-right: none;
+    border-left: 5px solid var(--secondary-color);
+    padding-right: 0;
+    padding-left: 1.2rem;
+}
+
+@media (max-width: 768px) {
+    body[dir="ltr"] .skill-category h3 {
+        border-left-width: 4px;
+        padding-left: 1rem;
+    }
+}
+
+.skill-item {
+    margin-bottom: 1.5rem;
+    width: 100%;
+}
+
+.skill-item span {
+    font-weight: 600;
+    font-size: clamp(1rem, 1.5vw, 1.2rem);
+    display: block;
+    margin-bottom: 0.8rem;
+    color: var(--text-color);
+    word-break: break-word;
+}
+
+.skill-bar {
+    height: 10px;
+    background-color: #e9ecef;
+    border-radius: 5px;
+    overflow: hidden;
+    margin-top: 0.5rem;
+    position: relative;
+    box-shadow: inset 0 2px 4px rgba(0,0,0,0.1);
+    width: 100%;
+}
+
+.skill-level {
+    height: 100%;
+    background: linear-gradient(90deg, var(--secondary-color), #5dade2);
+    border-radius: 5px;
+    position: relative;
+    overflow: hidden;
+}
+
+.skill-level:after {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+    animation: shimmer 2s infinite;
+}
+
+@keyframes shimmer {
+    0% {
+        transform: translateX(-100%);
+    }
+    100% {
+        transform: translateX(100%);
+    }
+}
+
+.skill-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.8rem;
+    margin-top: 0.8rem;
+    width: 100%;
+}
+
+.skill-tag {
+    background-color: var(--light-color);
+    padding: clamp(0.5rem, 1.5vw, 0.8rem) clamp(1rem, 2vw, 1.5rem);
+    border-radius: 30px;
+    font-size: clamp(0.85rem, 1.2vw, 1rem);
+    color: var(--primary-color);
+    border: 2px solid #dee2e6;
+    transition: var(--transition);
+    cursor: default;
+    font-weight: 600;
+    word-break: break-word;
+    text-align: center;
+    flex: 1;
+    min-width: calc(50% - 0.8rem);
+}
+
+@media (max-width: 576px) {
+    .skill-tag {
+        min-width: 100%;
+    }
+}
+
+.skill-tag:hover {
+    background-color: var(--secondary-color);
+    color: white;
+    border-color: var(--secondary-color);
+    transform: translateY(-3px);
+    box-shadow: 0 5px 15px rgba(52, 152, 219, 0.3);
+}
+
+/* اللغات */
+.language-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.2rem;
+    padding: 1rem 1.2rem;
+    background-color: var(--light-color);
+    border-radius: 12px;
+    transition: var(--transition);
+    border: 2px solid transparent;
+    flex-wrap: wrap;
+    gap: 1rem;
+}
+
+.language-item:hover {
+    background-color: #e8f4fc;
+    transform: translateX(5px);
+    border-color: var(--secondary-color);
+}
+
+body[dir="ltr"] .language-item:hover {
+    transform: translateX(-5px);
+}
+
+.language-item span {
+    font-weight: 600;
+    font-size: clamp(1rem, 1.5vw, 1.2rem);
+    color: var(--text-color);
+    flex: 1;
+    min-width: 120px;
+}
+
+.language-level {
+    display: flex;
+    flex-wrap: nowrap;
+}
+
+.dot {
+    width: clamp(12px, 2vw, 18px);
+    height: clamp(12px, 2vw, 18px);
+    border-radius: 50%;
+    background-color: #dee2e6;
+    margin-left: clamp(4px, 1vw, 8px);
+    transition: var(--transition);
+    border: 2px solid white;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    flex-shrink: 0;
+}
+
+body[dir="ltr"] .dot {
+    margin-left: 0;
+    margin-right: clamp(4px, 1vw, 8px);
+}
+
+.dot.filled {
+    background-color: var(--secondary-color);
+    box-shadow: 0 2px 8px rgba(52, 152, 219, 0.4);
+}
+
+/* الإنجازات */
+.achievement-details {
+    padding-right: 1.5rem;
+}
+
+body[dir="ltr"] .achievement-details {
+    padding-right: 0;
+    padding-left: 1.5rem;
+}
+
+.achievement-details li {
+    margin-bottom: 1rem;
+    position: relative;
+    padding-right: 1.8rem;
+    font-size: clamp(1rem, 1.3vw, 1.1rem);
+    line-height: 1.7;
+    color: var(--text-color);
+    word-break: break-word;
+}
+
+body[dir="ltr"] .achievement-details li {
+    padding-right: 0;
+    padding-left: 1.8rem;
+}
+
+.achievement-details li:before {
+    content: '✓';
+    position: absolute;
+    right: 0;
+    color: var(--secondary-color);
+    font-weight: bold;
+    font-size: 1.2rem;
+    top: 0.2rem;
+}
+
+body[dir="ltr"] .achievement-details li:before {
+    right: auto;
+    left: 0;
+}
+
+.achievement-image {
+    border-radius: 15px;
+    overflow: hidden;
+    transition: var(--transition);
+    border: 3px solid white;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+    width: 100%;
+    height: auto;
+    aspect-ratio: 16/9;
+}
+
+.achievement-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.achievement-image:hover {
+    transform: scale(1.02);
+    box-shadow: 0 15px 40px rgba(0,0,0,0.15);
+}
+
+/* الهوايات */
+.hobbies-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(250px, 100%), 1fr));
+    gap: clamp(1.5rem, 3vw, 2.5rem);
+    width: 100%;
+}
+
+.hobby-card {
+    background-color: white;
+    border-radius: 20px;
+    padding: clamp(1.5rem, 3vw, 2.5rem) clamp(1rem, 2vw, 1.5rem);
+    text-align: center;
+    box-shadow: var(--shadow);
+    transition: var(--transition);
+    position: relative;
+    overflow: hidden;
+    border: 2px solid transparent;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 200px;
+}
+
+@media (max-width: 480px) {
+    .hobby-card {
+        min-height: 180px;
+    }
+}
+
+.hobby-card:before {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(45deg, var(--secondary-color), transparent);
+    opacity: 0;
+    transition: var(--transition);
+}
+
+.hobby-card:hover {
+    transform: translateY(-10px);
+    background-color: var(--secondary-color);
+    color: white;
+    border-color: var(--secondary-color);
+}
+
+.hobby-card:hover:before {
+    opacity: 0.1;
+}
+
+.hobby-card:hover .hobby-icon {
+    background-color: white;
+    color: var(--secondary-color);
+    transform: rotate(360deg) scale(1.1);
+}
+
+.hobby-card h4 {
+    font-size: clamp(1.1rem, 2vw, 1.4rem);
+    font-weight: 700;
+    margin: 0;
+    position: relative;
+    z-index: 1;
+    word-break: break-word;
+}
+
+.hobby-icon {
+    width: clamp(60px, 8vw, 80px);
+    height: clamp(60px, 8vw, 80px);
+    background-color: var(--light-color);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto clamp(1rem, 2vw, 1.5rem);
+    font-size: clamp(1.5rem, 2.5vw, 2rem);
+    color: var(--secondary-color);
+    transition: var(--transition);
+    position: relative;
+    z-index: 1;
+    border: 3px solid white;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    flex-shrink: 0;
+}
+
+/* التواصل */
+.contact-info {
+    display: flex;
+    flex-direction: column;
+    gap: clamp(1.5rem, 3vw, 2.5rem);
+    width: 100%;
+}
+
+.contact-item {
+    display: flex;
+    align-items: center;
+    gap: clamp(1rem, 2vw, 1.8rem);
+    padding: clamp(1rem, 2vw, 1.8rem);
+    background-color: rgba(255, 255, 255, 0.12);
+    border-radius: 20px;
+    transition: var(--transition);
+    border: 2px solid transparent;
+    backdrop-filter: blur(10px);
+    flex-wrap: wrap;
+}
+
+@media (max-width: 768px) {
+    .contact-item {
+        flex-direction: column;
+        text-align: center;
+        gap: 1rem;
+    }
+}
+
+.contact-item:hover {
+    background-color: rgba(255, 255, 255, 0.2);
+    transform: translateY(-5px);
+    border-color: var(--secondary-color);
+}
+
+.contact-item i {
+    font-size: clamp(1.8rem, 3vw, 2.5rem);
+    color: var(--secondary-color);
+    background-color: rgba(255, 255, 255, 0.15);
+    width: clamp(60px, 8vw, 80px);
+    height: clamp(60px, 8vw, 80px);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    transition: var(--transition);
+    border: 3px solid rgba(255, 255, 255, 0.2);
+}
+
+.contact-item:hover i {
+    background-color: var(--secondary-color);
+    color: white;
+    transform: scale(1.1);
+    border-color: var(--secondary-color);
+}
+
+.contact-item h5 {
+    font-size: clamp(1.1rem, 2vw, 1.4rem);
+    margin-bottom: 0.5rem;
+    color: white;
+    font-weight: 700;
+}
+
+.contact-item p {
+    color: rgba(255, 255, 255, 0.95);
+    font-size: clamp(1rem, 1.5vw, 1.2rem);
+    font-weight: 500;
+    word-break: break-word;
+}
+
+/* الفوتر */
+.footer {
+    background: linear-gradient(90deg, #1a252f, #2c3e50);
+    color: white;
+    padding: clamp(1.5rem, 3vw, 2.5rem) 1rem;
+    text-align: center;
+    position: relative;
+    font-weight: 500;
+    margin-top: auto;
+}
+
+.footer:before {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 100%;
+    height: 5px;
+    background: linear-gradient(90deg, var(--secondary-color), var(--accent-color));
+}
+
+.footer p {
+    font-size: clamp(1rem, 1.5vw, 1.2rem);
+    margin: 0;
+    opacity: 0.9;
+    word-break: break-word;
+}
+
+/* تحسينات التجاوب الإضافية */
+
+/* تحسين الحاويات */
+.container, .container-fluid {
+    padding-left: clamp(1rem, 3vw, 2rem);
+    padding-right: clamp(1rem, 3vw, 2rem);
+}
+
+/* تحسين الصفوف والأعمدة */
+.row {
+    margin-left: -0.75rem;
+    margin-right: -0.75rem;
+}
+
+.col, .col-1, .col-10, .col-11, .col-12, .col-2, .col-3, .col-4, .col-5, .col-6, .col-7, .col-8, .col-9, .col-auto, .col-lg, .col-lg-1, .col-lg-10, .col-lg-11, .col-lg-12, .col-lg-2, .col-lg-3, .col-lg-4, .col-lg-5, .col-lg-6, .col-lg-7, .col-lg-8, .col-lg-9, .col-lg-auto, .col-md, .col-md-1, .col-md-10, .col-md-11, .col-md-12, .col-md-2, .col-md-3, .col-md-4, .col-md-5, .col-md-6, .col-md-7, .col-md-8, .col-md-9, .col-md-auto, .col-sm, .col-sm-1, .col-sm-10, .col-sm-11, .col-sm-12, .col-sm-2, .col-sm-3, .col-sm-4, .col-sm-5, .col-sm-6, .col-sm-7, .col-sm-8, .col-sm-9, .col-sm-auto, .col-xl, .col-xl-1, .col-xl-10, .col-xl-11, .col-xl-12, .col-xl-2, .col-xl-3, .col-xl-4, .col-xl-5, .col-xl-6, .col-xl-7, .col-xl-8, .col-xl-9, .col-xl-auto {
+    padding-left: 0.75rem;
+    padding-right: 0.75rem;
+}
+
+/* تحسين الأزرار */
+.btn {
+    padding: clamp(0.6rem, 1.5vw, 0.9rem) clamp(1.5rem, 3vw, 2rem);
+    font-size: clamp(0.9rem, 1.5vw, 1.1rem);
+    border-radius: 8px;
+    font-weight: 600;
+    min-height: 48px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    white-space: nowrap;
+}
+
+@media (max-width: 480px) {
+    .btn {
+        width: 100%;
+        max-width: 300px;
+        margin: 0 auto;
+    }
+}
+
+/* تحسين النصوص الطويلة */
+.text-truncate-2 {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.text-truncate-3 {
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/* تحسينات للعرض الأفقي على الهواتف */
+@media (max-width: 768px) and (orientation: landscape) {
+    .hero-section {
+        min-height: auto;
+        padding: 5rem 0 3rem;
     }
     
-    // حفظ النصوص العربية الأصلية في سمة data-ar
-    document.querySelectorAll('[data-en]').forEach(element => {
-        if (!element.hasAttribute('data-ar')) {
-            element.setAttribute('data-ar', element.textContent);
-        }
-    });
-    
-    // إضافة سمة data-ar خاصة لروابط التنقل
-    document.querySelectorAll('.nav-link[data-en]').forEach(link => {
-        if (!link.hasAttribute('data-ar')) {
-            link.setAttribute('data-ar', link.textContent);
-        }
-    });
-    
-    // إضافة أحداث النقر على أزرار اللغة
-    langArBtn.addEventListener('click', () => switchLanguage('ar'));
-    langEnBtn.addEventListener('click', () => switchLanguage('en'));
-    
-    // تهيئة اللغة عند التحميل
-    switchLanguage('ar');
-    
-    // تأثيرات إضافية للصور
-    const images = document.querySelectorAll('img');
-    images.forEach(img => {
-        img.addEventListener('mouseenter', function() {
-            gsap.to(this, {
-                duration: 0.5,
-                scale: 1.05,
-                ease: 'power2.out'
-            });
-        });
-        
-        img.addEventListener('mouseleave', function() {
-            gsap.to(this, {
-                duration: 0.5,
-                scale: 1,
-                ease: 'power2.out'
-            });
-        });
-    });
-    
-    // تأثير عند تحميل الصفحة
-    window.addEventListener('load', function() {
-        gsap.to('body', {
-            duration: 0.5,
-            opacity: 1,
-            ease: 'power2.out'
-        });
-    });
-    
-    // تأثيرات للبطاقات
-    const cards = document.querySelectorAll('.profile-card, .education-item, .achievement-card, .hobby-card');
-    cards.forEach(card => {
-        card.addEventListener('mouseenter', function() {
-            gsap.to(this, {
-                duration: 0.3,
-                y: -10,
-                boxShadow: '0 15px 30px rgba(0, 0, 0, 0.15)',
-                ease: 'power2.out'
-            });
-        });
-        
-        card.addEventListener('mouseleave', function() {
-            gsap.to(this, {
-                duration: 0.3,
-                y: 0,
-                boxShadow: 'var(--shadow)',
-                ease: 'power2.out'
-            });
-        });
-    });
-});
-// تهيئة GSAP للرسوم المتحركة
-document.addEventListener('DOMContentLoaded', function() {
-    // تهيئة GSAP مع ScrollTrigger
-    gsap.registerPlugin(ScrollTrigger);
-    
-    // الرسوم المتحركة للشريط العلوي
-    gsap.from('.navbar', {
-        duration: 1,
-        y: -100,
-        opacity: 0,
-        ease: 'power3.out'
-    });
-    
-    // الرسوم المتحركة للمحتوى الرئيسي
-    gsap.from('.hero-title', {
-        duration: 1.2,
-        y: 50,
-        opacity: 0,
-        delay: 0.5,
-        ease: 'power3.out'
-    });
-    
-    gsap.from('.hero-subtitle', {
-        duration: 1.2,
-        y: 50,
-        opacity: 0,
-        delay: 0.7,
-        ease: 'power3.out'
-    });
-    
-    gsap.from('.hero-description', {
-        duration: 1.2,
-        y: 50,
-        opacity: 0,
-        delay: 0.9,
-        ease: 'power3.out'
-    });
-    
-    gsap.from('.profile-image', {
-        duration: 1.5,
-        scale: 0.8,
-        opacity: 0,
-        delay: 1,
-        ease: 'back.out(1.7)'
-    });
-    
-    gsap.from('.image-frame', {
-        duration: 1.5,
-        scale: 0.8,
-        opacity: 0,
-        delay: 1.2,
-        ease: 'back.out(1.7)'
-    });
-    
-    // الرسوم المتحركة للعناصر العائمة
-    gsap.from('.floating-element', {
-        duration: 1,
-        scale: 0,
-        opacity: 0,
-        stagger: 0.3,
-        delay: 1.5,
-        ease: 'back.out(1.7)'
-    });
-    
-    // الرسوم المتحركة للعناصر عند التمرير
-    gsap.utils.toArray('.profile-card, .education-item, .skill-category, .achievement-card, .hobby-card').forEach(element => {
-        gsap.from(element, {
-            scrollTrigger: {
-                trigger: element,
-                start: 'top 80%',
-                end: 'bottom 20%',
-                toggleActions: 'play none none reverse'
-            },
-            duration: 1,
-            y: 50,
-            opacity: 0,
-            ease: 'power3.out'
-        });
-    });
-    
-    // الرسوم المتحركة لأشرطة المهارات
-    gsap.utils.toArray('.skill-level').forEach(bar => {
-        const width = bar.style.width;
-        bar.style.width = '0%';
-        
-        gsap.to(bar, {
-            scrollTrigger: {
-                trigger: bar.parentElement.parentElement,
-                start: 'top 80%',
-                end: 'bottom 20%',
-                toggleActions: 'play none none reverse'
-            },
-            duration: 1.5,
-            width: width,
-            ease: 'power3.out'
-        });
-    });
-    
-    // إدارة تغيير اللغة
-    const langArBtn = document.getElementById('lang-ar');
-    const langEnBtn = document.getElementById('lang-en');
-    const body = document.body;
-    
-    // تعيين اللغة الافتراضية (العربية)
-    let currentLang = 'ar';
-    
-    // دالة لتغيير اللغة
-    function switchLanguage(lang) {
-        currentLang = lang;
-        
-        // تغيير اتجاه الصفحة
-        if (lang === 'ar') {
-            body.setAttribute('dir', 'rtl');
-            body.style.textAlign = 'right';
-            document.documentElement.lang = 'ar';
-        } else {
-            body.setAttribute('dir', 'ltr');
-            body.style.textAlign = 'left';
-            document.documentElement.lang = 'en';
-        }
-        
-        // تحديث النصوص
-        document.querySelectorAll('[data-en]').forEach(element => {
-            if (lang === 'en') {
-                if (element.tagName === 'INPUT' || element.tagName === 'TEXTAREA') {
-                    element.placeholder = element.getAttribute('data-en');
-                } else {
-                    // حفظ النص العربي الأصلي إذا لم يتم حفظه مسبقاً
-                    if (!element.hasAttribute('data-ar')) {
-                        element.setAttribute('data-ar', element.textContent);
-                    }
-                    element.textContent = element.getAttribute('data-en');
-                }
-            } else {
-                // استعادة النص العربي من سمة data-ar
-                if (element.hasAttribute('data-ar')) {
-                    element.textContent = element.getAttribute('data-ar');
-                }
-            }
-        });
-        
-        // تحديث أزرار اللغة
-        if (lang === 'ar') {
-            langArBtn.classList.add('active');
-            langEnBtn.classList.remove('active');
-            langArBtn.textContent = 'عربي';
-            langEnBtn.textContent = 'English';
-        } else {
-            langEnBtn.classList.add('active');
-            langArBtn.classList.remove('active');
-            langArBtn.textContent = 'Arabic';
-            langEnBtn.textContent = 'English';
-        }
-        
-        // تحديث عنوان الصفحة
-        if (lang === 'en') {
-            document.title = "CV | Waddah Bassah - Mechatronics Engineer";
-        } else {
-            document.title = "السيرة الذاتية | وضاح بصه - مهندس ميكاترونكس";
-        }
-        
-        // إعادة توجيه اتجاه شريط المهارات المتحرك
-        const marqueeTrack = document.querySelector('.marquee-track');
-        if (marqueeTrack) {
-            if (lang === 'ar') {
-                marqueeTrack.style.animation = 'marquee-rtl 30s linear infinite';
-            } else {
-                marqueeTrack.style.animation = 'marquee-ltr 30s linear infinite';
-            }
-        }
+    .profile-image {
+        max-width: 250px;
+        margin: 0 auto;
     }
     
-    // حفظ النصوص العربية الأصلية في سمة data-ar
-    document.querySelectorAll('[data-en]').forEach(element => {
-        if (!element.hasAttribute('data-ar')) {
-            element.setAttribute('data-ar', element.textContent);
-        }
-    });
-    
-    // إضافة سمة data-ar خاصة لروابط التنقل
-    document.querySelectorAll('.nav-link[data-en]').forEach(link => {
-        if (!link.hasAttribute('data-ar')) {
-            link.setAttribute('data-ar', link.textContent);
-        }
-    });
-    
-    // إضافة أحداث النقر على أزرار اللغة
-    langArBtn.addEventListener('click', () => switchLanguage('ar'));
-    langEnBtn.addEventListener('click', () => switchLanguage('en'));
-    
-    // تهيئة اللغة عند التحميل
-    switchLanguage('ar');
-    
-    // تأثيرات إضافية للصور
-    const images = document.querySelectorAll('img');
-    images.forEach(img => {
-        img.addEventListener('mouseenter', function() {
-            gsap.to(this, {
-                duration: 0.5,
-                scale: 1.05,
-                ease: 'power2.out'
-            });
-        });
-        
-        img.addEventListener('mouseleave', function() {
-            gsap.to(this, {
-                duration: 0.5,
-                scale: 1,
-                ease: 'power2.out'
-            });
-        });
-    });
-    
-    // تأثير عند تحميل الصفحة
-    window.addEventListener('load', function() {
-        gsap.to('body', {
-            duration: 0.5,
-            opacity: 1,
-            ease: 'power2.out'
-        });
-    });
-    
-    // تأثيرات للبطاقات
-    const cards = document.querySelectorAll('.profile-card, .education-item, .achievement-card, .hobby-card');
-    cards.forEach(card => {
-        card.addEventListener('mouseenter', function() {
-            gsap.to(this, {
-                duration: 0.3,
-                y: -10,
-                boxShadow: '0 15px 30px rgba(0, 0, 0, 0.15)',
-                ease: 'power2.out'
-            });
-        });
-        
-        card.addEventListener('mouseleave', function() {
-            gsap.to(this, {
-                duration: 0.3,
-                y: 0,
-                boxShadow: 'var(--shadow)',
-                ease: 'power2.out'
-            });
-        });
-    });
-    
-    // ==============================================
-    // وظيفة النسخ التلقائي عند النقر
-    // ==============================================
-    
-    // دالة نسخ النص إلى الحافظة
-    function copyToClipboard(text) {
-        // إنشاء عنصر textarea مؤقت
-        const textarea = document.createElement('textarea');
-        textarea.value = text;
-        textarea.setAttribute('readonly', '');
-        textarea.style.position = 'absolute';
-        textarea.style.left = '-9999px';
-        document.body.appendChild(textarea);
-        
-        // تحديد النص
-        textarea.select();
-        textarea.setSelectionRange(0, 99999); // للجوال
-        
-        // نسخ النص
-        let success = false;
-        try {
-            success = document.execCommand('copy');
-            console.log('تم النسخ: ' + text);
-        } catch (err) {
-            console.error('فشل النسخ: ', err);
-            
-            // محاولة باستخدام Clipboard API الجديد
-            if (navigator.clipboard && navigator.clipboard.writeText) {
-                navigator.clipboard.writeText(text).then(() => {
-                    success = true;
-                }).catch(err => {
-                    console.error('فشل النسخ باستخدام Clipboard API: ', err);
-                });
-            }
-        }
-        
-        // إزالة العنصر المؤقت
-        document.body.removeChild(textarea);
-        
-        return success;
+    .hobbies-container {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+/* تحسينات للأجهزة ذات الشاشات الكبيرة جداً */
+@media (min-width: 1600px) {
+    .container {
+        max-width: 1400px;
+    }
+}
+
+/* تحسينات للوصول والتوافق */
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
     }
     
-    // دالة لإظهار إشعار النسخ
-    function showCopyNotification(element, text) {
-        // إيجاد عنصر الإشعار
-        const notification = element.querySelector('.copy-notification');
-        if (!notification) return;
-        
-        // إظهار الإشعار
-        notification.classList.add('show');
-        
-        // إضافة تأثير GSAP للإشعار
-        gsap.fromTo(notification, 
-            { opacity: 0, y: 10 },
-            { opacity: 1, y: 0, duration: 0.3, ease: 'power2.out' }
-        );
-        
-        // إضافة تأثير اهتزاز للعنصر
-        gsap.to(element, {
-            duration: 0.1,
-            x: 5,
-            yoyo: true,
-            repeat: 2,
-            ease: 'power2.inOut'
-        });
-        
-        // تغيير لون العنصر مؤقتاً
-        element.style.backgroundColor = 'rgba(52, 152, 219, 0.3)';
-        element.style.borderColor = 'var(--secondary-color)';
-        
-        // إخفاء الإشعار بعد 2 ثانية
-        setTimeout(() => {
-            notification.classList.remove('show');
-            gsap.to(element, {
-                duration: 0.5,
-                backgroundColor: 'rgba(255, 255, 255, 0.1)',
-                borderColor: 'transparent',
-                ease: 'power2.out'
-            });
-        }, 2000);
-        
-        // إضافة تأثير صوتي بسيط
-        if (typeof Audio !== 'undefined') {
-            try {
-                const audio = new Audio('data:audio/wav;base64,UklGRigAAABXQVZFZm10IBIAAAABAAEAQB8AAEAfAAABAAgAZGF0YQAAAAA=');
-                audio.volume = 0.1;
-                audio.play();
-            } catch (e) {
-                // تجاهل خطأ الصوت
-            }
-        }
+    .floating-element,
+    .marquee-track,
+    .skill-level:after {
+        animation: none !important;
+    }
+}
+
+/* تحسينات للطباعة */
+@media print {
+    .navbar,
+    .language-switcher,
+    .floating-elements,
+    .skills-marquee,
+    .hobby-card:hover .hobby-icon,
+    .contact-item i {
+        display: none !important;
     }
     
-    // إضافة حدث النقر لعناصر النسخ
-    document.querySelectorAll('.copyable').forEach(element => {
-        // إضافة مؤشر عند التمرير
-        element.style.cursor = 'pointer';
-        
-        // حدث النقر للنسخ
-        element.addEventListener('click', function(e) {
-            e.preventDefault();
-            e.stopPropagation();
-            
-            // الحصول على النص المراد نسخه
-            const textToCopy = this.getAttribute('data-copy') || this.textContent.trim();
-            
-            // تنظيف النص من أي رموز إضافية
-            const cleanText = textToCopy
-                .replace('تم النسخ!', '')
-                .replace('Copied!', '')
-                .replace('📋', '')
-                .trim();
-            
-            // نسخ النص
-            const success = copyToClipboard(cleanText);
-            
-            if (success) {
-                // إظهار إشعار النجاح
-                showCopyNotification(this, cleanText);
-                
-                // تسجيل الحدث في Google Analytics إذا كان متوفراً
-                if (typeof gtag !== 'undefined') {
-                    gtag('event', 'copy_contact', {
-                        'event_category': 'engagement',
-                        'event_label': cleanText
-                    });
-                }
-            } else {
-                // محاولة بديلة لعرض رسالة للمستخدم
-                alert(currentLang === 'ar' ? 
-                    'فشل النسخ. يمكنك نسخ النص يدوياً:\n' + cleanText : 
-                    'Copy failed. You can copy manually:\n' + cleanText);
-            }
-        });
-        
-        // تأثير عند التمرير فوق العنصر
-        element.addEventListener('mouseenter', function() {
-            gsap.to(this, {
-                duration: 0.3,
-                scale: 1.02,
-                ease: 'power2.out'
-            });
-        });
-        
-        element.addEventListener('mouseleave', function() {
-            gsap.to(this, {
-                duration: 0.3,
-                scale: 1,
-                ease: 'power2.out'
-            });
-        });
-    });
+    body {
+        font-size: 12pt;
+        line-height: 1.5;
+    }
     
-    // إضافة إمكانية نسخ أي نص في قسم التواصل
-    document.querySelectorAll('#contact p:not(.copyable)').forEach(element => {
-        // تخطي العناصر التي تحتوي بالفعل على copyable
-        if (!element.classList.contains('copyable') && 
-            !element.querySelector('.copyable') &&
-            (element.textContent.includes('@') || 
-             element.textContent.match(/\d{10,}/) ||
-             element.textContent.includes('+967'))) {
-            
-            // جعل النص قابلاً للنسخ
-            element.classList.add('copyable');
-            element.style.cursor = 'pointer';
-            
-            // إضافة رمز النسخ
-            const text = element.textContent.trim();
-            element.setAttribute('data-copy', text);
-            
-            // إضافة إشعار النسخ إذا لم يكن موجوداً
-            if (!element.querySelector('.copy-notification')) {
-                const notification = document.createElement('span');
-                notification.className = 'copy-notification';
-                notification.textContent = currentLang === 'ar' ? 'تم النسخ!' : 'Copied!';
-                notification.setAttribute('data-en', 'Copied!');
-                notification.setAttribute('data-ar', 'تم النسخ!');
-                element.appendChild(notification);
-            }
-        }
-    });
+    .container {
+        max-width: 100%;
+        padding: 0;
+    }
     
-    // دعم اللمس للأجهزة المحمولة
-    let touchStartTime = 0;
-    document.querySelectorAll('.copyable').forEach(element => {
-        element.addEventListener('touchstart', function(e) {
-            touchStartTime = Date.now();
-            e.preventDefault();
-        }, { passive: false });
-        
-        element.addEventListener('touchend', function(e) {
-            const touchDuration = Date.now() - touchStartTime;
-            if (touchDuration < 500) { // نقر سريع، ليس استمراراً
-                this.click();
-            }
-            e.preventDefault();
-        }, { passive: false });
-    });
-});
+    .section-padding {
+        padding: 20pt 0;
+    }
+    
+    .hero-section {
+        padding: 40pt 0 20pt;
+    }
+}
+/* إضافة تنسيقات للنسخ التلقائي */
+.copyable {
+    cursor: pointer;
+    position: relative;
+    padding: 0.5rem 1rem;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 8px;
+    transition: all 0.3s ease;
+    border: 2px solid transparent;
+    display: inline-block;
+    margin-top: 0.5rem;
+    user-select: all;
+    -webkit-user-select: all;
+    -moz-user-select: all;
+    -ms-user-select: all;
+}
+
+.copyable:hover {
+    background: rgba(255, 255, 255, 0.2);
+    border-color: var(--secondary-color);
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(52, 152, 219, 0.3);
+}
+
+.copyable:active {
+    transform: translateY(0);
+}
+
+.copyable::after {
+    content: "📋";
+    margin-right: 0.5rem;
+    opacity: 0.7;
+    transition: opacity 0.3s ease;
+}
+
+body[dir="ltr"] .copyable::after {
+    margin-right: 0;
+    margin-left: 0.5rem;
+}
+
+.copyable:hover::after {
+    opacity: 1;
+}
+
+.copy-notification {
+    position: absolute;
+    top: -35px;
+    left: 50%;
+    transform: translateX(-50%) translateY(10px);
+    background: var(--secondary-color);
+    color: white;
+    padding: 0.5rem 1rem;
+    border-radius: 6px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease;
+    white-space: nowrap;
+    z-index: 100;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.copy-notification::after {
+    content: '';
+    position: absolute;
+    bottom: -8px;
+    left: 50%;
+    transform: translateX(-50%);
+    border-width: 8px 8px 0;
+    border-style: solid;
+    border-color: var(--secondary-color) transparent transparent;
+}
+
+.copy-notification.show {
+    opacity: 1;
+    visibility: visible;
+    transform: translateX(-50%) translateY(0);
+}
+
+/* تحسينات للجوال */
+@media (max-width: 768px) {
+    .copyable {
+        display: block;
+        text-align: center;
+        padding: 0.8rem;
+        margin: 0.5rem auto;
+        max-width: 300px;
+    }
+    
+    .copy-notification {
+        top: -45px;
+        font-size: 0.8rem;
+        padding: 0.4rem 0.8rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .copyable {
+        font-size: 1rem;
+        padding: 0.7rem;
+    }
+    
+    .copyable::after {
+        font-size: 0.9rem;
+    }
+}
