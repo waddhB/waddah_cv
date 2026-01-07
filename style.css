@@ -454,7 +454,7 @@ body[dir="ltr"] .image-frame {
     margin: 20px auto;
     width: 100%;
     display: flex;
-    overflow-x: auto;
+    overflow: hidden;
     transform-origin: center;
     justify-content: center;
 }
@@ -1265,6 +1265,7 @@ body[dir="ltr"] .copyable::after {
         font-size: 0.9rem;
     }
 }
+
 
 
 
