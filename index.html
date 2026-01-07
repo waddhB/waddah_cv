@@ -24,6 +24,32 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700&family=Open+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <script>
+// إصلاح مشاكل الهاتف
+document.addEventListener('DOMContentLoaded', function() {
+    // منع سلوك اللمس السيء
+    document.querySelectorAll('.carousel').forEach(carousel => {
+        carousel.addEventListener('touchstart', function(e) {
+            // منع التأثيرات غير المرغوبة
+            if (e.touches.length > 1) {
+                e.preventDefault();
+            }
+        }, { passive: false });
+        
+        carousel.addEventListener('touchmove', function(e) {
+            // السماح بالتمرير العمودي فقط
+            if (Math.abs(e.touches[0].clientX - this.startX) > 10) {
+                e.preventDefault();
+            }
+        }, { passive: false });
+    });
+    
+    // تحسين الأداء على الهواتف
+    if ('ontouchstart' in window) {
+        document.body.classList.add('touch-device');
+    }
+});
+</script>
 </head>
 <body>
     <nav class="navbar navbar-expand-lg fixed-top">
@@ -642,6 +668,7 @@
     <script src="script.js"></script>
 </body>
 </html>
+
 
 
 
