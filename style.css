@@ -498,12 +498,12 @@ body[dir="ltr"] .image-frame {
 }
 @media (max-width: 480px){
     .carousel.bottom .gtoup{
-        animation-duration: 13s;
+        animation-duration: 15s;
     }
 }
 @media (min-width: 1200px){
     .gtoup{
-        animation-duration: 16s;
+        animation-duration: 12s;
     }
 }
 
@@ -1257,4 +1257,5 @@ body[dir="ltr"] .copyable::after {
         font-size: 0.9rem;
     }
 }
+
 
