@@ -484,9 +484,11 @@ body[dir="ltr"] .image-frame {
 .card img {
     width: 50%;
     height: 50%;
+    margin: 0;
+    padding: 0;
     object-fit: cover;
     display: block;
-    align-items: center;
+    align-items: contain;
     transition: transform 0.5s ease;
     justify-content: center;
 }
@@ -1266,6 +1268,7 @@ body[dir="ltr"] .copyable::after {
         font-size: 0.9rem;
     }
 }
+
 
 
 
