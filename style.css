@@ -450,79 +450,60 @@ body[dir="ltr"] .image-frame {
     }
 }
 
-/* شريط المهارات المتحرك */
-.skills-marquee {
-    background: linear-gradient(90deg, var(--primary-color), #34495e);
-    color: white;
-    padding: 1.2rem 0;
-    overflow: hidden;
-    position: relative;
-    font-weight: 600;
-}
-
-.marquee-container {
+.carousel{
+    margin: 20px auto;
     width: 100%;
-    overflow: hidden;
-    position: relative;
-}
-
-.marquee-track {
     display: flex;
-    animation: marquee-rtl 30s linear infinite;
-    white-space: nowrap;
-    will-change: transform;
-    padding: 0.5rem 0;
+    overflow-x: auto;
+    transform-origin: center;
+    justify-content: center;
 }
 
-.marquee-item {
-    padding: 0.5rem clamp(1rem, 3vw, 2rem);
-    font-size: clamp(0.9rem, 1.5vw, 1.3rem);
-    font-weight: 700;
-    color: white;
-    flex-shrink: 0;
-    position: relative;
-    transition: var(--transition);
-    text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
-    white-space: nowrap;
+.carousel::-webkit-scrollbar{
+    display: none;
 }
-
-.marquee-item:hover {
-    color: var(--secondary-color);
-    transform: translateY(-3px);
+.gtoup{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    animation: spin 10s infinite linear;
 }
-
-.marquee-item:after {
-    content: "•";
-    position: absolute;
-    right: -8px;
-    color: var(--secondary-color);
-    font-size: 1.5rem;
+.card{
+    flex: 0 0 3em;
+    height:3em;
+    font-size: 2.5rem;
+    /* border-radius: 2.5em; */
+    text-align: .4em;
+    align-content: center;
+    justify-content: center;
+     padding: 0;       /* إزالة أي padding */
+    background: none; /* إزالة أي لون خلفية */
+    border: none; 
 }
-
-@keyframes marquee-rtl {
-    0% {
-        transform: translateX(0);
+.card img {
+    width: 50%;
+    height: 50%;
+    object-fit: cover;
+    display: block;
+    align-items: center;
+    transition: transform 0.5s ease;
+    justify-content: center;
+}
+.carousel.bottom .gtoup {
+    animation-duration: 5s;
+}
+@keyframes spin{
+    from {translate: 0;}
+    to {translate: -100%;}
+}
+@media (max-width: 480px){
+    .carousel.bottom .gtoup{
+        animation-duration: 6s;
     }
-    100% {
-        transform: translateX(50%);
-    }
 }
-
-@keyframes marquee-ltr {
-    0% {
-        transform: translateX(-50%);
-    }
-    100% {
-        transform: translateX(0);
-    }
-}
-
-@keyframes float {
-    0%, 100% {
-        transform: translateY(0) rotate(0deg);
-    }
-    50% {
-        transform: translateY(-25px) rotate(5deg);
+@media (min-width: 1200px){
+    .gtoup{
+        animation-duration: 12s;
     }
 }
 
