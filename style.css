@@ -521,6 +521,27 @@ body[dir="ltr"] .image-frame {
 .carousel, .gtoup, .card {
     composes: fix-mobile;
 }
+/* لأجهزة اللمس فقط */
+@media (hover: none) and (pointer: coarse) {
+    .carousel {
+        -webkit-overflow-scrolling: touch !important;
+        scroll-snap-type: x mandatory !important;
+    }
+    
+    .gtoup {
+        animation-duration: 20s !important; /* أبطأ على اللمس */
+    }
+    
+    .card {
+        scroll-snap-align: start !important;
+    }
+    
+    /* منع التكبير على اللمس المزدوج */
+    * {
+        -ms-touch-action: manipulation !important;
+        touch-action: manipulation !important;
+    }
+}
 /* الأقسام العامة */
 .section-padding {
     padding: clamp(4rem, 8vw, 8rem) 1rem;
@@ -1271,6 +1292,7 @@ body[dir="ltr"] .copyable::after {
         font-size: 0.9rem;
     }
 }
+
 
 
 
