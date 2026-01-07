@@ -506,42 +506,15 @@ body[dir="ltr"] .image-frame {
         animation-duration: 12s;
     }
 }
-/* أضف هذه الفئة فقط */
-.fix-mobile {
-    -webkit-transform: translate3d(0,0,0);
-    transform: translate3d(0,0,0);
-    -webkit-backface-visibility: hidden;
-    backface-visibility: hidden;
-    -webkit-perspective: 1000;
-    perspective: 1000;
-    will-change: transform;
+@keyframes spin {
+    from {
+        transform: translate3d(0, 0, 0);
+    }
+    to {
+        transform: translate3d(-100%, 0, 0);
+    }
 }
 
-/* طبقه على العناصر */
-.carousel, .gtoup, .card {
-    composes: fix-mobile;
-}
-/* لأجهزة اللمس فقط */
-@media (hover: none) and (pointer: coarse) {
-    .carousel {
-        -webkit-overflow-scrolling: touch !important;
-        scroll-snap-type: x mandatory !important;
-    }
-    
-    .gtoup {
-        animation-duration: 20s !important; /* أبطأ على اللمس */
-    }
-    
-    .card {
-        scroll-snap-align: start !important;
-    }
-    
-    /* منع التكبير على اللمس المزدوج */
-    * {
-        -ms-touch-action: manipulation !important;
-        touch-action: manipulation !important;
-    }
-}
 /* الأقسام العامة */
 .section-padding {
     padding: clamp(4rem, 8vw, 8rem) 1rem;
@@ -1292,6 +1265,7 @@ body[dir="ltr"] .copyable::after {
         font-size: 0.9rem;
     }
 }
+
 
 
 
