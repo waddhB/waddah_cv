@@ -237,6 +237,7 @@ body[dir="ltr"] .language-switcher {
     border-left: none;
 }
 
+
 body[dir="ltr"] .lang-btn:first-child {
     border-radius: 8px 0 0 8px;
     border-left: 2px solid #ddd;
@@ -482,8 +483,8 @@ body[dir="ltr"] .image-frame {
     border: none; 
 }
 .card img {
-    width: 50%;
-    height: 50%;
+    width: 70%;
+    height: auto;
     margin: 0;
     padding: 0;
     object-fit: cover;
