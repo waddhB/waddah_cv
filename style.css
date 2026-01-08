@@ -518,6 +518,11 @@ body[dir="ltr"] .image-frame {
     }
 }
 
+@media (max-width: 480px){
+    .skillsa{ display: none; }
+}
+
+
 /* الأقسام العامة */
 .section-padding {
     padding: clamp(4rem, 8vw, 8rem) 1rem;
