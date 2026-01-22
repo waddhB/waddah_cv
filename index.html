@@ -23,6 +23,7 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.4/gsap.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.4/ScrollTrigger.min.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <link rel="stylesheet" href="style.css">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -72,7 +73,6 @@
           <li class="nav-item"><a class="nav-link" href="#skills" data-en="Skills">المهارات</a></li>
           <li class="nav-item"><a class="nav-link" href="#achievements" data-en="Achievements">الإنجازات</a></li>
           <li class="nav-item"><a class="nav-link" href="#hobbies" data-en="Hobbies">الهوايات</a></li>
-          <li class="nav-item"><a class="nav-link" href="#contact" data-en="Contact">التواصل</a></li>
           <li class="nav-item">
             <div class="language-switcher">
               <button id="lang-ar" class="lang-btn active">عربي</button>
@@ -94,7 +94,7 @@
               data-en="A passionate Mechatronics engineer with expertise in web development, seeking to leverage technical skills in innovative projects.">
               مهندس ميكاترونكس شغوف مع خبرة في تطوير الويب، أسعى لتوظيف مهاراتي التقنية في مشاريع مبتكرة.
             </p>
-            <a href="#contact" class="btn btn-primary mt-3" data-en="Contact Me">تواصل معي</a>
+            <a href="https://drive.google.com/file/d/13mLQbvB1myDhBaOTiYrSftMWfAEkgeR1/view?usp=drive_link" target="_blank" class="btn btn-primary mt-3" data-en="Download the cv">تنزيل السيرة الذاتية</a>
           </div>
         </div>
         <div class="col-lg-6">
@@ -678,47 +678,40 @@
       </div>
     </div>
   </section>
-  <section id="contact" class="section-padding bg-dark text-light">
-    <div class="container">
-      <h2 class="section-title text-light" data-en="Contact">التواصل</h2>
-      <div class="row">
-        <div class="col-lg-8 mx-auto">
-          <div class="contact-info">
-            <div class="contact-item">
-              <i class="bi bi-envelope"></i>
-              <div>
-                <h5 data-en="Email">البريد الإلكتروني</h5>
-                <p class="copyable" data-copy="wadahbassah@gmail.com">
-                  wadahbassah@gmail.com
-                  <span class="copy-notification" data-en="Copied!">تم النسخ!</span>
-                </p>
-              </div>
-            </div>
-            <div class="contact-item">
-              <i class="bi bi-phone"></i>
-              <div>
-                <h5 data-en="Phone">الهاتف</h5>
-                <p class="copyable" data-copy="00967775852585">
-                  00967775852585
-                  <span class="copy-notification" data-en="Copied!">تم النسخ!</span>
-                </p>
-              </div>
-            </div>
-            <div class="contact-item">
-              <i class="bi bi-geo-alt"></i>
-              <div>
-                <h5 data-en="Address">العنوان</h5>
-                <p data-en="Dairy ST. Sana'a">شارع الدائري، صنعاء، اليمن</p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
+  <section class="waddah">
+
   </section>
   <footer class="footer">
     <div class="container">
-      <p class="mb-0" data-en="&copy; Waddah Bassah. All rights reserved.">
+      <!-- روابط الصفحات الرئيسية -->
+      <div class="footer-links mb-4">
+        <nav class="nav justify-content-center">
+          <a class="nav-link" href="#home" data-en="Home">الرئيسية</a>
+          <a class="nav-link" href="#about" data-en="Profile">الملف الشخصي</a>
+          <a class="nav-link" href="#education" data-en="Education">التعليم</a>
+          <a class="nav-link" href="#skills" data-en="Skills">المهارات</a>
+          <a class="nav-link" href="#achievements" data-en="Achievements">الإنجازات</a>
+          <a class="nav-link" href="#hobbies" data-en="Hobbies">الهوايات</a>
+        </nav>
+      </div>
+
+      <!-- أيقونات التواصل الاجتماعي باستخدام Font Awesome -->
+      <div class="social-icons mb-4">
+        <div class="social-icons">
+          <a href="#" class="social-icon"><i class="fa-brands fa-x-twitter"></i></a>
+          <a href="https://www.linkedin.com/feed/?trk=guest_homepage-basic_google-one-tap-submit" class="social-icon"><i class="fa-brands fa-linkedin-in"></i></a>
+          <a href="https://www.instagram.com/wa27m?igsh=MTBsdjdxeHhkNXZpNw==" class="social-icon"><i class="fa-brands fa-instagram"></i></a>
+          <a href="https://github.com/waddhB" class="social-icon"><i class="fa-brands fa-github"></i></a>
+          <a href="mailto:wadahbassah@gmail.com" class="social-icon"><i class="fa-solid fa-envelope"></i></a>
+          <a href="https://wa.me/00967775852585" class="social-icon"> <i class="fa-brands fa-whatsapp "></i></a>
+         
+        
+        </div>
+
+      </div>
+
+      <!-- حقوق النشر -->
+      <p class="mb-0 text-center" data-en="&copy; Waddah Bassah. All rights reserved.">
         وضاح بصه. جميع الحقوق محفوظة &copy;
       </p>
     </div>
@@ -734,13 +727,13 @@
 
       // تحديث النص الإنجليزي في data-en إذا أردت
       if (footer.dataset.en) {
-        footer.dataset.en = `&copy; ${year} Waddah Bassah. All rights reserved.`;
+        footer.dataset.en = `${year} Waddah Bassah. All rights reserved.`;
       }
     });
   </script>
 
 
-  
+
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
   <script src="script.js"></script>
 </body>

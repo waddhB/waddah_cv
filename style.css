@@ -1013,32 +1013,104 @@ body[dir="ltr"] .achievement-details li:before {
 }
 
 /* الفوتر */
+/* =========================
+   FOOTER
+========================= */
+
 .footer {
-    background: linear-gradient(90deg, #1a252f, #2c3e50);
-    color: white;
-    padding: clamp(1.5rem, 3vw, 2.5rem) 1rem;
-    text-align: center;
-    position: relative;
-    font-weight: 500;
-    margin-top: auto;
+  background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+  color: #ffffff;
+  padding: 50px 0 25px;
 }
 
-.footer:before {
-    content: '';
-    position: absolute;
-    top: 0;
-    right: 0;
-    width: 100%;
-    height: 5px;
-    background: linear-gradient(90deg, var(--secondary-color), var(--accent-color));
+/* المحتوى */
+.footer-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 25px;
 }
 
-.footer p {
-    font-size: clamp(1rem, 1.5vw, 1.2rem);
-    margin: 0;
-    opacity: 0.9;
-    word-break: break-word;
+/* =========================
+   LINKS
+========================= */
+.footer-links {
+  display: flex;
+  gap: 22px;
+  justify-content: center;
+  flex-wrap: wrap;
 }
+
+.footer-links a {
+  color: #dddddd;
+  text-decoration: none;
+  font-size: 15px;
+  transition: color 0.3s ease;
+}
+
+.footer-links a:hover {
+  color: #1da1f2;
+}
+
+/* =========================
+   SOCIAL ICONS
+========================= */
+.social-icons {
+  display: flex;
+  gap: 18px;
+  justify-content: center;
+}
+
+.social-icon {
+  color: #ffffff;
+  font-size: 22px;
+  transition: transform 0.3s ease, color 0.3s ease;
+}
+
+.social-icon:hover {
+  color: #1da1f2;
+  transform: translateY(-4px);
+}
+
+/* =========================
+   COPYRIGHT
+========================= */
+.footer .copyright {
+  text-align: center;
+  font-size: 14px;
+  color: #cccccc;
+}
+
+/* =========================
+   MOBILE
+========================= */
+@media (max-width: 768px) {
+  .footer-links {
+    gap: 15px;
+  }
+}
+
+
+
+
+/* الأيقونات */
+
+
+
+
+
+/* موبايل */
+@media (max-width: 768px) {
+  .footer-content {
+    flex-direction: column;
+    gap: 25px;
+  }
+}
+
+
+
+
+
 
 /* تحسينات التجاوب الإضافية */
 
@@ -1168,84 +1240,10 @@ body[dir="ltr"] .achievement-details li:before {
     }
 }
 /* إضافة تنسيقات للنسخ التلقائي */
-.copyable {
-    cursor: pointer;
-    position: relative;
-    padding: 0.5rem 1rem;
-    background: rgba(255, 255, 255, 0.1);
-    border-radius: 8px;
-    transition: all 0.3s ease;
-    border: 2px solid transparent;
-    display: inline-block;
-    margin-top: 0.5rem;
-    user-select: all;
-    -webkit-user-select: all;
-    -moz-user-select: all;
-    -ms-user-select: all;
-}
 
-.copyable:hover {
-    background: rgba(255, 255, 255, 0.2);
-    border-color: var(--secondary-color);
-    transform: translateY(-2px);
-    box-shadow: 0 5px 15px rgba(52, 152, 219, 0.3);
-}
 
-.copyable:active {
-    transform: translateY(0);
-}
 
-.copyable::after {
-    content: "📋";
-    margin-right: 0.5rem;
-    opacity: 0.7;
-    transition: opacity 0.3s ease;
-}
 
-body[dir="ltr"] .copyable::after {
-    margin-right: 0;
-    margin-left: 0.5rem;
-}
-
-.copyable:hover::after {
-    opacity: 1;
-}
-
-.copy-notification {
-    position: absolute;
-    top: -35px;
-    left: 50%;
-    transform: translateX(-50%) translateY(10px);
-    background: var(--secondary-color);
-    color: white;
-    padding: 0.5rem 1rem;
-    border-radius: 6px;
-    font-size: 0.9rem;
-    font-weight: 600;
-    opacity: 0;
-    visibility: hidden;
-    transition: all 0.3s ease;
-    white-space: nowrap;
-    z-index: 100;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-}
-
-.copy-notification::after {
-    content: '';
-    position: absolute;
-    bottom: -8px;
-    left: 50%;
-    transform: translateX(-50%);
-    border-width: 8px 8px 0;
-    border-style: solid;
-    border-color: var(--secondary-color) transparent transparent;
-}
-
-.copy-notification.show {
-    opacity: 1;
-    visibility: visible;
-    transform: translateX(-50%) translateY(0);
-}
 
 /* تحسينات للجوال */
 @media (max-width: 768px) {
@@ -1274,7 +1272,6 @@ body[dir="ltr"] .copyable::after {
         font-size: 0.9rem;
     }
 }
-
 
 
 
