@@ -1,4 +1,4 @@
-// PENCIL LOADER - JavaScript معزول
+// PENCIL LOADER - JavaScript مع تأثيرات اختفاء متحركة
 (function() {
     'use strict';
     
@@ -7,6 +7,7 @@
     var PENCIL_TEXT_ELEMENT = null;
     var PENCIL_MESSAGE_INTERVAL = null;
     var PENCIL_IS_INITIALIZED = false;
+    var PENCIL_IS_HIDING = false;
     
     // رسائل التحميل
     var PENCIL_MESSAGES = [
@@ -36,16 +37,18 @@
         
         // إخفاء تلقائي بعد تحميل الصفحة
         window.addEventListener('load', function() {
-            setTimeout(PENCIL_HIDE_LOADER, 800);
+            // تأخير بسيط لمشاهدة الرسوم المتحركة
+            setTimeout(function() {
+                PENCIL_HIDE_LOADER_WITH_ANIMATION();
+            }, 1500);
         });
         
-        // خيار: إخفاء بعد 10 ثواني كحد أقصى (فالسة أمان)
+        // خيار: إخفاء بعد 8 ثواني كحد أقصى (فالسة أمان)
         setTimeout(function() {
-            if (PENCIL_IS_INITIALIZED && 
-                !PENCIL_LOADER_ELEMENT.classList.contains('PENCIL_LOADER_HIDDEN')) {
-                PENCIL_HIDE_LOADER();
+            if (PENCIL_IS_INITIALIZED && !PENCIL_IS_HIDING) {
+                PENCIL_HIDE_LOADER_WITH_ANIMATION();
             }
-        }, 10000);
+        }, 8000);
     }
     
     // بدء تغيير الرسائل
@@ -76,33 +79,77 @@
         if (!PENCIL_IS_INITIALIZED) PENCIL_INIT_LOADER();
         
         if (PENCIL_LOADER_ELEMENT) {
-            PENCIL_LOADER_ELEMENT.classList.remove('PENCIL_LOADER_HIDDEN');
+            PENCIL_LOADER_ELEMENT.classList.remove('PENCIL_EXIT_ANIMATION');
+            PENCIL_LOADER_ELEMENT.style.display = 'flex';
+            setTimeout(function() {
+                PENCIL_LOADER_ELEMENT.style.opacity = '1';
+                PENCIL_LOADER_ELEMENT.style.transform = 'translateY(0)';
+            }, 10);
             PENCIL_START_MESSAGES();
+            PENCIL_IS_HIDING = false;
         }
     }
     
-    // إخفاء شاشة التحميل
-    function PENCIL_HIDE_LOADER() {
-        if (!PENCIL_IS_INITIALIZED) return;
+    // إخفاء شاشة التحميل مع تأثير متحرك
+    function PENCIL_HIDE_LOADER_WITH_ANIMATION() {
+        if (!PENCIL_IS_INITIALIZED || PENCIL_IS_HIDING) return;
+        
+        PENCIL_IS_HIDING = true;
         
         if (PENCIL_LOADER_ELEMENT) {
-            PENCIL_LOADER_ELEMENT.classList.add('PENCIL_LOADER_HIDDEN');
+            // إضافة كلاس التأثير المتحرك
+            PENCIL_LOADER_ELEMENT.classList.add('PENCIL_EXIT_ANIMATION');
             
             // إيقاف تغيير الرسائل
             if (PENCIL_MESSAGE_INTERVAL) {
                 clearInterval(PENCIL_MESSAGE_INTERVAL);
                 PENCIL_MESSAGE_INTERVAL = null;
             }
+            
+            // إزالة العنصر من DOM بعد انتهاء التأثير
+            setTimeout(function() {
+                if (PENCIL_LOADER_ELEMENT) {
+                    PENCIL_LOADER_ELEMENT.style.display = 'none';
+                    
+                    // إرسال حدث أن التحميل انتهى
+                    var event = new CustomEvent('pencilLoaderHidden', {
+                        detail: { timestamp: Date.now() }
+                    });
+                    document.dispatchEvent(event);
+                }
+            }, 800); // يجب أن يتطابق مع مدة الانتقال في CSS
+        }
+    }
+    
+    // إخفاء فوري (بدون تأثيرات)
+    function PENCIL_HIDE_LOADER_IMMEDIATE() {
+        if (!PENCIL_IS_INITIALIZED) return;
+        
+        if (PENCIL_LOADER_ELEMENT) {
+            PENCIL_LOADER_ELEMENT.style.display = 'none';
+            
+            // إيقاف تغيير الرسائل
+            if (PENCIL_MESSAGE_INTERVAL) {
+                clearInterval(PENCIL_MESSAGE_INTERVAL);
+                PENCIL_MESSAGE_INTERVAL = null;
+            }
+            
+            PENCIL_IS_HIDING = false;
         }
     }
     
     // تهيئة تلقائية عند تحميل DOM
-    document.addEventListener('DOMContentLoaded', PENCIL_INIT_LOADER);
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', PENCIL_INIT_LOADER);
+    } else {
+        PENCIL_INIT_LOADER();
+    }
     
     // جعل الدوال متاحة عالمياً
     window.PENCIL_LOADER = {
         show: PENCIL_SHOW_LOADER,
-        hide: PENCIL_HIDE_LOADER,
+        hide: PENCIL_HIDE_LOADER_WITH_ANIMATION,
+        hideImmediate: PENCIL_HIDE_LOADER_IMMEDIATE,
         init: PENCIL_INIT_LOADER,
         setMessages: function(messages) {
             if (Array.isArray(messages) && messages.length > 0) {
@@ -111,8 +158,26 @@
                     PENCIL_START_MESSAGES();
                 }
             }
+        },
+        // دالة للتحقق إذا كانت الشاشة مرئية
+        isVisible: function() {
+            return PENCIL_IS_INITIALIZED && 
+                   PENCIL_LOADER_ELEMENT && 
+                   PENCIL_LOADER_ELEMENT.style.display !== 'none' &&
+                   !PENCIL_IS_HIDING;
         }
     };
+    
+    // اختصارات لوحة المفاتيح للتجربة (للمطورين فقط)
+    document.addEventListener('keydown', function(e) {
+        if (e.ctrlKey && e.key === 'l') {
+            if (window.PENCIL_LOADER.isVisible()) {
+                window.PENCIL_LOADER.hide();
+            } else {
+                window.PENCIL_LOADER.show();
+            }
+        }
+    });
     
 })();
 

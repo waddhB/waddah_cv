@@ -1,34 +1,113 @@
-/* PENCIL LOADER - CSS معزول */
+/* PENCIL LOADER - CSS متجاوب بالكامل */
 .PENCIL_LOADING_SCREEN {
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: #ffffff;
+    min-height: 100vh;
+    background: linear-gradient(135deg, #ecf0f1 0%, #ffffff 100%);
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     z-index: 999999;
-    transition: opacity 0.5s ease, visibility 0.5s ease;
-    font-family: system-ui, -apple-system, sans-serif;
+    overflow: hidden;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+    transition: transform 0.8s cubic-bezier(0.68, -0.55, 0.27, 1.55),
+        opacity 0.8s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+    transform: translateY(0);
+    opacity: 1;
+    box-sizing: border-box;
+    padding: 20px;
+    touch-action: manipulation;
+    -webkit-tap-highlight-color: transparent;
 }
 
-.PENCIL_LOADING_SCREEN.PENCIL_LOADER_HIDDEN {
+/* تأثيرات الخروج - تتحرك للأعلى وتتلاشى */
+.PENCIL_LOADING_SCREEN.PENCIL_EXIT_ANIMATION {
+    transform: translateY(-100vh);
     opacity: 0;
-    visibility: hidden;
-    pointer-events: none;
+}
+
+/* الطبقة المسؤولة عن تأثير الموجة عند الخروج */
+.PENCIL_LOADING_SCREEN::before {
+    content: '';
+    position: absolute;
+    bottom: -50px;
+    left: 0;
+    width: 100%;
+    height: 100px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 50%;
+    filter: blur(10px);
+    transition: all 0.8s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+}
+
+.PENCIL_LOADING_SCREEN.PENCIL_EXIT_ANIMATION::before {
+    bottom: -200px;
+    transform: scale(2);
+    opacity: 0;
+}
+
+.PENCIL_LOADER_CONTENT {
+    position: relative;
+    z-index: 2;
+    text-align: center;
+    transition: transform 0.8s cubic-bezier(0.68, -0.55, 0.27, 1.55),
+        opacity 0.6s ease;
+    max-width: 100%;
+    width: 100%;
+    padding: 0 15px;
+}
+
+.PENCIL_LOADING_SCREEN.PENCIL_EXIT_ANIMATION .PENCIL_LOADER_CONTENT {
+    transform: translateY(-50px) scale(0.9);
+    opacity: 0;
 }
 
 .PENCIL_LOADER_WRAPPER {
     margin-bottom: 30px;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* تأثير توهج خفيف حول القلم */
+.PENCIL_LOADER_WRAPPER::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: min(220px, 40vw);
+    height: min(220px, 40vw);
+    background: radial-gradient(circle, rgba(255, 255, 255, 0.2) 0%, transparent 70%);
+    border-radius: 50%;
+    z-index: -1;
+    animation: PENCIL_GLOW_EFFECT 2s ease-in-out infinite alternate;
+}
+
+@keyframes PENCIL_GLOW_EFFECT {
+    from {
+        opacity: 0.3;
+        transform: translate(-50%, -50%) scale(0.95);
+    }
+
+    to {
+        opacity: 0.6;
+        transform: translate(-50%, -50%) scale(1.05);
+    }
 }
 
 .PENCIL_SVG_MAIN {
-    width: 200px;
-    height: 200px;
+    width: min(200px, 35vw);
+    height: min(200px, 35vw);
+    max-width: 200px;
+    max-height: 200px;
     display: block;
+    filter: drop-shadow(0 10px 20px rgba(0, 0, 0, 0.2));
 }
 
 /* عناصر الرسوم المتحركة */
@@ -65,7 +144,7 @@
 
 .PENCIL_ERASER_ANIM {
     animation-name: PENCIL_ANIM_ERASER;
-    transform: rotate(-90deg) translate(49px,0);
+    transform: rotate(-90deg) translate(49px, 0);
 }
 
 .PENCIL_ERASER_SKEW_ANIM {
@@ -75,7 +154,7 @@
 
 .PENCIL_POINT_ANIM {
     animation-name: PENCIL_ANIM_POINT;
-    transform: rotate(-90deg) translate(49px,-30px);
+    transform: rotate(-90deg) translate(49px, -30px);
 }
 
 .PENCIL_ROTATE_GROUP {
@@ -84,31 +163,183 @@
 
 .PENCIL_STROKE_ANIM {
     animation-name: PENCIL_ANIM_STROKE;
-    transform: translate(100px,100px) rotate(-113deg);
+    transform: translate(100px, 100px) rotate(-113deg);
 }
 
 /* نصوص التحميل */
+.PENCIL_TEXT_CONTAINER {
+    position: relative;
+    width: 100%;
+    max-width: 500px;
+    margin: 0 auto;
+}
+
 .PENCIL_LOADING_TEXT {
-    font-size: 24px;
-    color: #2c3e50;
-    margin: 0 0 10px 0;
+    font-size: clamp(24px, 5vw, 32px);
+    color: rgba(3, 21, 74, 0.9);
+    margin: 0 0 15px 0;
     text-align: center;
-    font-weight: 600;
+    font-weight: 700;
+    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+    letter-spacing: 0.5px;
+    line-height: 1.3;
 }
 
 .PENCIL_LOADING_SUBTEXT {
-    font-size: 16px;
-    color: #7f8c8d;
-    margin: 0;
+    font-size: clamp(16px, 3vw, 20px);
+    color: rgba(3, 21, 74, 0.9);
+    margin: 0 0 25px 0;
+    text-align: center;
+    text-shadow: 0 1px 5px rgba(0, 0, 0, 0.2);
+    line-height: 1.5;
+}
+
+/* تأثير نقاط التحميل المتحركة */
+.PENCIL_LOADING_SUBTEXT::after {
+    content: '';
+    animation: PENCIL_DOTS_ANIM 1.5s infinite;
+}
+
+@keyframes PENCIL_DOTS_ANIM {
+
+    0%,
+    20% {
+        content: '';
+    }
+
+    40% {
+        content: '.';
+    }
+
+    60% {
+        content: '..';
+    }
+
+    80%,
+    100% {
+        content: '...';
+    }
+}
+
+/* تأثيرات دخول النصوص */
+.PENCIL_LOADING_TEXT {
+    animation: PENCIL_TEXT_FADE_IN 0.8s ease-out;
+}
+
+.PENCIL_LOADING_SUBTEXT {
+    animation: PENCIL_TEXT_FADE_IN 0.8s ease-out 0.2s both;
+}
+
+@keyframes PENCIL_TEXT_FADE_IN {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* شريط التقدم */
+.PENCIL_PROGRESS_CONTAINER {
+    width: 100%;
+    height: 8px;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 4px;
+    margin: 25px auto 15px;
+    overflow: hidden;
+    position: relative;
+    max-width: 300px;
+}
+
+.PENCIL_PROGRESS_BAR {
+    width: 0%;
+    height: 100%;
+    background: linear-gradient(90deg, #4facfe 0%, #00f2fe 100%);
+    border-radius: 4px;
+    transition: width 0.5s ease-out;
+    position: relative;
+    overflow: hidden;
+}
+
+.PENCIL_PROGRESS_BAR::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+    animation: PENCIL_PROGRESS_GLOW 1.5s infinite;
+}
+
+@keyframes PENCIL_PROGRESS_GLOW {
+    0% {
+        transform: translateX(-100%);
+    }
+
+    100% {
+        transform: translateX(100%);
+    }
+}
+
+/* النسبة المئوية */
+.PENCIL_PERCENTAGE {
+    font-size: clamp(18px, 4vw, 24px);
+    color: #ffffff;
+    font-weight: 600;
+    text-align: center;
+    margin-top: 10px;
+    text-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+}
+
+/* معلومات للجوال */
+.PENCIL_MOBILE_INFO {
+    position: absolute;
+    bottom: 40px;
+    left: 0;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    padding: 0 20px;
+    opacity: 0.8;
+}
+
+.PENCIL_TIP_CONTAINER {
+    background: rgba(255, 255, 255, 0.15);
+    backdrop-filter: blur(10px);
+    border-radius: 12px;
+    padding: 12px 20px;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    max-width: 400px;
+    width: 100%;
+    justify-content: center;
+}
+
+.PENCIL_TIP_ICON {
+    font-size: 20px;
+    flex-shrink: 0;
+}
+
+.PENCIL_TIP_TEXT {
+    font-size: clamp(12px, 2.5vw, 14px);
+    color: rgba(255, 255, 255, 0.9);
     text-align: center;
 }
 
-/* الرسوم المتحركة */
+/* الرسوم المتحركة للقلم */
 @keyframes PENCIL_ANIM_BODY_1 {
-    from, to {
+
+    from,
+    to {
         stroke-dashoffset: 351.86;
         transform: rotate(-90deg);
     }
+
     50% {
         stroke-dashoffset: 150.8;
         transform: rotate(-225deg);
@@ -116,10 +347,13 @@
 }
 
 @keyframes PENCIL_ANIM_BODY_2 {
-    from, to {
+
+    from,
+    to {
         stroke-dashoffset: 406.84;
         transform: rotate(-90deg);
     }
+
     50% {
         stroke-dashoffset: 174.36;
         transform: rotate(-225deg);
@@ -127,10 +361,13 @@
 }
 
 @keyframes PENCIL_ANIM_BODY_3 {
-    from, to {
+
+    from,
+    to {
         stroke-dashoffset: 296.88;
         transform: rotate(-90deg);
     }
+
     50% {
         stroke-dashoffset: 127.23;
         transform: rotate(-225deg);
@@ -138,91 +375,334 @@
 }
 
 @keyframes PENCIL_ANIM_ERASER {
-    from, to {
-        transform: rotate(-45deg) translate(49px,0);
+
+    from,
+    to {
+        transform: rotate(-45deg) translate(49px, 0);
     }
+
     50% {
-        transform: rotate(0deg) translate(49px,0);
+        transform: rotate(0deg) translate(49px, 0);
     }
 }
 
 @keyframes PENCIL_ANIM_ERASER_SKEW {
-    from, 32.5%, 67.5%, to {
+
+    from,
+    32.5%,
+    67.5%,
+    to {
         transform: skewX(0);
     }
-    35%, 65% {
+
+    35%,
+    65% {
         transform: skewX(-4deg);
     }
-    37.5%, 62.5% {
+
+    37.5%,
+    62.5% {
         transform: skewX(8deg);
     }
-    40%, 45%, 50%, 55%, 60% {
+
+    40%,
+    45%,
+    50%,
+    55%,
+    60% {
         transform: skewX(-15deg);
     }
-    42.5%, 47.5%, 52.5%, 57.5% {
+
+    42.5%,
+    47.5%,
+    52.5%,
+    57.5% {
         transform: skewX(15deg);
     }
 }
 
 @keyframes PENCIL_ANIM_POINT {
-    from, to {
-        transform: rotate(-90deg) translate(49px,-30px);
+
+    from,
+    to {
+        transform: rotate(-90deg) translate(49px, -30px);
     }
+
     50% {
-        transform: rotate(-225deg) translate(49px,-30px);
+        transform: rotate(-225deg) translate(49px, -30px);
     }
 }
 
 @keyframes PENCIL_ANIM_ROTATE {
     from {
-        transform: translate(100px,100px) rotate(0);
+        transform: translate(100px, 100px) rotate(0);
     }
+
     to {
-        transform: translate(100px,100px) rotate(720deg);
+        transform: translate(100px, 100px) rotate(720deg);
     }
 }
 
 @keyframes PENCIL_ANIM_STROKE {
     from {
         stroke-dashoffset: 439.82;
-        transform: translate(100px,100px) rotate(-113deg);
+        transform: translate(100px, 100px) rotate(-113deg);
     }
+
     50% {
         stroke-dashoffset: 164.93;
-        transform: translate(100px,100px) rotate(-113deg);
+        transform: translate(100px, 100px) rotate(-113deg);
     }
-    75%, to {
+
+    75%,
+    to {
         stroke-dashoffset: 439.82;
-        transform: translate(100px,100px) rotate(112deg);
+        transform: translate(100px, 100px) rotate(112deg);
     }
 }
 
-/* تصميم متجاوب */
+/* تأثيرات إضافية للخلفية */
+.PENCIL_LOADING_SCREEN::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, #ecf0f1 0%, #ffffff 100%);
+    z-index: 1;
+    animation: PENCIL_BG_MOVE 20s infinite alternate;
+}
+
+@keyframes PENCIL_BG_MOVE {
+    0% {
+        transform: translate(0, 0) scale(1);
+    }
+
+    100% {
+        transform: translate(-50px, -50px) scale(1.1);
+    }
+}
+
+/* ===== تصميم متجاوب متقدم ===== */
+
+/* الأجهزة اللوحية (عرض أقل من 768px) */
 @media (max-width: 768px) {
-    .PENCIL_SVG_MAIN {
-        width: 150px;
-        height: 150px;
+    .PENCIL_LOADING_SCREEN {
+        padding: 15px;
     }
+
+    .PENCIL_LOADER_WRAPPER {
+        margin-bottom: 25px;
+    }
+
     .PENCIL_LOADING_TEXT {
-        font-size: 20px;
+        margin-bottom: 12px;
     }
+
     .PENCIL_LOADING_SUBTEXT {
-        font-size: 14px;
+        margin-bottom: 20px;
+    }
+
+    .PENCIL_PROGRESS_CONTAINER {
+        margin: 20px auto 12px;
+        height: 6px;
+    }
+
+    .PENCIL_MOBILE_INFO {
+        bottom: 30px;
+    }
+
+    .PENCIL_TIP_CONTAINER {
+        padding: 10px 16px;
+        gap: 8px;
     }
 }
 
+/* الهواتف الصغيرة (عرض أقل من 480px) */
 @media (max-width: 480px) {
+    .PENCIL_LOADING_SCREEN {
+        padding: 10px;
+        justify-content: center;
+    }
+
+    .PENCIL_LOADER_CONTENT {
+        padding: 0 10px;
+    }
+
+    .PENCIL_LOADER_WRAPPER {
+        margin-bottom: 20px;
+    }
+
+    .PENCIL_SVG_MAIN {
+        width: min(150px, 50vw);
+        height: min(150px, 50vw);
+    }
+
+    .PENCIL_LOADER_WRAPPER::after {
+        width: min(180px, 60vw);
+        height: min(180px, 60vw);
+    }
+
+    .PENCIL_LOADING_TEXT {
+        font-size: clamp(20px, 6vw, 24px);
+        margin-bottom: 10px;
+    }
+
+    .PENCIL_LOADING_SUBTEXT {
+        font-size: clamp(14px, 4vw, 16px);
+        margin-bottom: 18px;
+    }
+
+    .PENCIL_PROGRESS_CONTAINER {
+        margin: 18px auto 10px;
+        height: 5px;
+    }
+
+    .PENCIL_PERCENTAGE {
+        font-size: clamp(16px, 4.5vw, 20px);
+    }
+
+    .PENCIL_MOBILE_INFO {
+        bottom: 25px;
+        padding: 0 15px;
+    }
+
+    .PENCIL_TIP_CONTAINER {
+        padding: 8px 14px;
+        gap: 6px;
+    }
+
+    .PENCIL_TIP_ICON {
+        font-size: 18px;
+    }
+
+    .PENCIL_TIP_TEXT {
+        font-size: 12px;
+    }
+}
+
+/* الأجهزة ذات الشاشات الكبيرة جداً */
+@media (min-width: 1200px) {
+    .PENCIL_SVG_MAIN {
+        width: 220px;
+        height: 220px;
+    }
+
+    .PENCIL_LOADER_WRAPPER::after {
+        width: 240px;
+        height: 240px;
+    }
+
+    .PENCIL_LOADING_TEXT {
+        font-size: 36px;
+    }
+
+    .PENCIL_LOADING_SUBTEXT {
+        font-size: 22px;
+    }
+}
+
+/* الأجهزة ذات النسبة العالية (مثل Galaxy Fold) */
+@media (max-width: 280px) {
     .PENCIL_SVG_MAIN {
         width: 120px;
         height: 120px;
     }
+
+    .PENCIL_LOADER_WRAPPER::after {
+        width: 140px;
+        height: 140px;
+    }
+
     .PENCIL_LOADING_TEXT {
         font-size: 18px;
     }
+
     .PENCIL_LOADING_SUBTEXT {
         font-size: 13px;
     }
+
+    .PENCIL_TIP_CONTAINER {
+        flex-direction: column;
+        padding: 8px 12px;
+        gap: 5px;
+    }
 }
+
+/* دعم الوضع الأفقي للهواتف */
+@media (max-height: 500px) and (orientation: landscape) {
+    .PENCIL_LOADING_SCREEN {
+        flex-direction: row;
+        padding: 10px;
+        gap: 30px;
+    }
+
+    .PENCIL_LOADER_WRAPPER {
+        margin-bottom: 0;
+        flex: 0 0 auto;
+    }
+
+    .PENCIL_SVG_MAIN {
+        width: 120px;
+        height: 120px;
+    }
+
+    .PENCIL_TEXT_CONTAINER {
+        text-align: left;
+        max-width: 60%;
+    }
+
+    .PENCIL_LOADING_TEXT,
+    .PENCIL_LOADING_SUBTEXT {
+        text-align: left;
+    }
+
+    .PENCIL_MOBILE_INFO {
+        display: none;
+    }
+
+    .PENCIL_PROGRESS_CONTAINER {
+        margin: 15px 0 10px;
+    }
+}
+
+/* دعم الوضع الداكن */
+@media (prefers-color-scheme: dark) {
+    .PENCIL_LOADING_SCREEN {
+        background: linear-gradient(135deg, #434343 0%, #000000 100%);
+    }
+
+    .PENCIL_PROGRESS_BAR {
+        background: linear-gradient(90deg, #8a2387 0%, #f27121 100%);
+    }
+}
+
+/* دعم تقليل الحركة (لمن لديهم حساسية) */
+@media (prefers-reduced-motion: reduce) {
+
+    .PENCIL_BODY_1,
+    .PENCIL_BODY_2,
+    .PENCIL_BODY_3,
+    .PENCIL_ERASER_ANIM,
+    .PENCIL_ERASER_SKEW_ANIM,
+    .PENCIL_POINT_ANIM,
+    .PENCIL_ROTATE_GROUP,
+    .PENCIL_STROKE_ANIM,
+    .PENCIL_LOADER_WRAPPER::after,
+    .PENCIL_PROGRESS_BAR::after,
+    .PENCIL_LOADING_SCREEN::after,
+    .PENCIL_LOADING_SUBTEXT::after {
+        animation: none !important;
+    }
+
+    .PENCIL_LOADING_SCREEN,
+    .PENCIL_LOADER_CONTENT,
+    .PENCIL_LOADING_SCREEN::before {
+        transition: opacity 0.3s ease !important;
+    }
+}
+
 :root {
     --primary-color: #2c3e50;
     --secondary-color: #3498db;
@@ -314,7 +794,7 @@ body[dir="ltr"] .marquee-item:after {
     font-size: 1.5rem;
     color: var(--primary-color);
     letter-spacing: 0.5px;
-    text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
     padding: 0.5rem 0;
     white-space: nowrap;
 }
@@ -486,7 +966,8 @@ body[dir="ltr"] .lang-btn:last-child {
     background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
     overflow: hidden;
     position: relative;
-    margin-top: 60px; /* تعويض للشريط الثابت */
+    margin-top: 60px;
+    /* تعويض للشريط الثابت */
     min-height: calc(100vh - 60px);
     display: flex;
     align-items: center;
@@ -514,7 +995,7 @@ body[dir="ltr"] .lang-btn:last-child {
     margin-bottom: 1.2rem;
     line-height: 1.2;
     letter-spacing: 1px;
-    text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .hero-subtitle {
@@ -676,7 +1157,7 @@ body[dir="ltr"] .image-frame {
     }
 }
 
-.carousel{
+.carousel {
     margin: 20px auto;
     width: 100%;
     display: flex;
@@ -685,28 +1166,33 @@ body[dir="ltr"] .image-frame {
     justify-content: center;
 }
 
-.carousel::-webkit-scrollbar{
+.carousel::-webkit-scrollbar {
     display: none;
 }
-.gtoup{
+
+.gtoup {
     display: flex;
     align-items: center;
     justify-content: center;
     animation: spin 10s infinite linear;
     will-change: transform;
 }
-.card{
+
+.card {
     flex: 0 0 3em;
-    height:3em;
+    height: 3em;
     font-size: 2.5rem;
     /* border-radius: 2.5em; */
     text-align: .4em;
     align-content: center;
     justify-content: center;
-     padding: 0;       /* إزالة أي padding */
-    background: none; /* إزالة أي لون خلفية */
-    border: none; 
+    padding: 0;
+    /* إزالة أي padding */
+    background: none;
+    /* إزالة أي لون خلفية */
+    border: none;
 }
+
 .card img {
     width: 70%;
     height: auto;
@@ -718,34 +1204,47 @@ body[dir="ltr"] .image-frame {
     transition: transform 0.5s ease;
     justify-content: center;
 }
+
 .carousel.bottom .gtoup {
     animation-duration: 5s;
 }
-@keyframes spin{
-    from {translate: 0;}
-    to {translate: -100%;}
+
+@keyframes spin {
+    from {
+        translate: 0;
+    }
+
+    to {
+        translate: -100%;
+    }
 }
-@media (max-width: 480px){
-    .carousel.bottom .gtoup{
+
+@media (max-width: 480px) {
+    .carousel.bottom .gtoup {
         animation-duration: 6s;
     }
 }
-@media (min-width: 1200px){
-    .gtoup{
+
+@media (min-width: 1200px) {
+    .gtoup {
         animation-duration: 12s;
     }
 }
+
 @keyframes spin {
     from {
         transform: translate3d(0, 0, 0);
     }
+
     to {
         transform: translate3d(-100%, 0, 0);
     }
 }
 
-@media (max-width: 480px){
-    .skillsa{ display: none; }
+@media (max-width: 480px) {
+    .skillsa {
+        display: none;
+    }
 }
 
 
@@ -787,7 +1286,9 @@ body[dir="ltr"] .image-frame {
 }
 
 /* البطاقات */
-.profile-card, .education-item, .achievement-card {
+.profile-card,
+.education-item,
+.achievement-card {
     background-color: white;
     border-radius: 20px;
     padding: clamp(1.5rem, 3vw, 2.5rem);
@@ -800,7 +1301,9 @@ body[dir="ltr"] .image-frame {
     margin: 0 auto;
 }
 
-.profile-card:before, .education-item:before, .achievement-card:before {
+.profile-card:before,
+.education-item:before,
+.achievement-card:before {
     content: '';
     position: absolute;
     top: 0;
@@ -812,17 +1315,24 @@ body[dir="ltr"] .image-frame {
     transition: var(--transition);
 }
 
-.profile-card:hover:before, .education-item:hover:before, .achievement-card:hover:before {
+.profile-card:hover:before,
+.education-item:hover:before,
+.achievement-card:hover:before {
     transform: translateX(0);
 }
 
-.profile-card:hover, .education-item:hover, .achievement-card:hover {
+.profile-card:hover,
+.education-item:hover,
+.achievement-card:hover {
     transform: translateY(-10px);
     box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
 }
 
 @media (max-width: 768px) {
-    .profile-card:hover, .education-item:hover, .achievement-card:hover {
+
+    .profile-card:hover,
+    .education-item:hover,
+    .achievement-card:hover {
         transform: translateY(-5px);
     }
 }
@@ -886,7 +1396,7 @@ body[dir="ltr"] .skill-category h3 {
     overflow: hidden;
     margin-top: 0.5rem;
     position: relative;
-    box-shadow: inset 0 2px 4px rgba(0,0,0,0.1);
+    box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.1);
     width: 100%;
 }
 
@@ -905,7 +1415,7 @@ body[dir="ltr"] .skill-category h3 {
     right: 0;
     bottom: 0;
     left: 0;
-    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
     animation: shimmer 2s infinite;
 }
 
@@ -913,6 +1423,7 @@ body[dir="ltr"] .skill-category h3 {
     0% {
         transform: translateX(-100%);
     }
+
     100% {
         transform: translateX(100%);
     }
@@ -1002,7 +1513,7 @@ body[dir="ltr"] .language-item:hover {
     margin-left: clamp(4px, 1vw, 8px);
     transition: var(--transition);
     border: 2px solid white;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     flex-shrink: 0;
 }
 
@@ -1061,7 +1572,7 @@ body[dir="ltr"] .achievement-details li:before {
     overflow: hidden;
     transition: var(--transition);
     border: 3px solid white;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
     width: 100%;
     height: auto;
     aspect-ratio: 16/9;
@@ -1075,7 +1586,7 @@ body[dir="ltr"] .achievement-details li:before {
 
 .achievement-image:hover {
     transform: scale(1.02);
-    box-shadow: 0 15px 40px rgba(0,0,0,0.15);
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
 }
 
 /* الهوايات */
@@ -1162,7 +1673,7 @@ body[dir="ltr"] .achievement-details li:before {
     position: relative;
     z-index: 1;
     border: 3px solid white;
-    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
     flex-shrink: 0;
 }
 
@@ -1243,76 +1754,76 @@ body[dir="ltr"] .achievement-details li:before {
 ========================= */
 
 .footer {
-  background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
-  color: #ffffff;
-  padding: 50px 0 25px;
+    background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+    color: #ffffff;
+    padding: 50px 0 25px;
 }
 
 /* المحتوى */
 .footer-content {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 25px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 25px;
 }
 
 /* =========================
    LINKS
 ========================= */
 .footer-links {
-  display: flex;
-  gap: 22px;
-  justify-content: center;
-  flex-wrap: wrap;
+    display: flex;
+    gap: 22px;
+    justify-content: center;
+    flex-wrap: wrap;
 }
 
 .footer-links a {
-  color: #dddddd;
-  text-decoration: none;
-  font-size: 15px;
-  transition: color 0.3s ease;
+    color: #dddddd;
+    text-decoration: none;
+    font-size: 15px;
+    transition: color 0.3s ease;
 }
 
 .footer-links a:hover {
-  color: #1da1f2;
+    color: #1da1f2;
 }
 
 /* =========================
    SOCIAL ICONS
 ========================= */
 .social-icons {
-  display: flex;
-  gap: 18px;
-  justify-content: center;
+    display: flex;
+    gap: 18px;
+    justify-content: center;
 }
 
 .social-icon {
-  color: #ffffff;
-  font-size: 22px;
-  transition: transform 0.3s ease, color 0.3s ease;
+    color: #ffffff;
+    font-size: 22px;
+    transition: transform 0.3s ease, color 0.3s ease;
 }
 
 .social-icon:hover {
-  color: #1da1f2;
-  transform: translateY(-4px);
+    color: #1da1f2;
+    transform: translateY(-4px);
 }
 
 /* =========================
    COPYRIGHT
 ========================= */
 .footer .copyright {
-  text-align: center;
-  font-size: 14px;
-  color: #cccccc;
+    text-align: center;
+    font-size: 14px;
+    color: #cccccc;
 }
 
 /* =========================
    MOBILE
 ========================= */
 @media (max-width: 768px) {
-  .footer-links {
-    gap: 15px;
-  }
+    .footer-links {
+        gap: 15px;
+    }
 }
 
 
@@ -1326,10 +1837,10 @@ body[dir="ltr"] .achievement-details li:before {
 
 /* موبايل */
 @media (max-width: 768px) {
-  .footer-content {
-    flex-direction: column;
-    gap: 25px;
-  }
+    .footer-content {
+        flex-direction: column;
+        gap: 25px;
+    }
 }
 
 
@@ -1340,7 +1851,8 @@ body[dir="ltr"] .achievement-details li:before {
 /* تحسينات التجاوب الإضافية */
 
 /* تحسين الحاويات */
-.container, .container-fluid {
+.container,
+.container-fluid {
     padding-left: clamp(1rem, 3vw, 2rem);
     padding-right: clamp(1rem, 3vw, 2rem);
 }
@@ -1351,7 +1863,76 @@ body[dir="ltr"] .achievement-details li:before {
     margin-right: -0.75rem;
 }
 
-.col, .col-1, .col-10, .col-11, .col-12, .col-2, .col-3, .col-4, .col-5, .col-6, .col-7, .col-8, .col-9, .col-auto, .col-lg, .col-lg-1, .col-lg-10, .col-lg-11, .col-lg-12, .col-lg-2, .col-lg-3, .col-lg-4, .col-lg-5, .col-lg-6, .col-lg-7, .col-lg-8, .col-lg-9, .col-lg-auto, .col-md, .col-md-1, .col-md-10, .col-md-11, .col-md-12, .col-md-2, .col-md-3, .col-md-4, .col-md-5, .col-md-6, .col-md-7, .col-md-8, .col-md-9, .col-md-auto, .col-sm, .col-sm-1, .col-sm-10, .col-sm-11, .col-sm-12, .col-sm-2, .col-sm-3, .col-sm-4, .col-sm-5, .col-sm-6, .col-sm-7, .col-sm-8, .col-sm-9, .col-sm-auto, .col-xl, .col-xl-1, .col-xl-10, .col-xl-11, .col-xl-12, .col-xl-2, .col-xl-3, .col-xl-4, .col-xl-5, .col-xl-6, .col-xl-7, .col-xl-8, .col-xl-9, .col-xl-auto {
+.col,
+.col-1,
+.col-10,
+.col-11,
+.col-12,
+.col-2,
+.col-3,
+.col-4,
+.col-5,
+.col-6,
+.col-7,
+.col-8,
+.col-9,
+.col-auto,
+.col-lg,
+.col-lg-1,
+.col-lg-10,
+.col-lg-11,
+.col-lg-12,
+.col-lg-2,
+.col-lg-3,
+.col-lg-4,
+.col-lg-5,
+.col-lg-6,
+.col-lg-7,
+.col-lg-8,
+.col-lg-9,
+.col-lg-auto,
+.col-md,
+.col-md-1,
+.col-md-10,
+.col-md-11,
+.col-md-12,
+.col-md-2,
+.col-md-3,
+.col-md-4,
+.col-md-5,
+.col-md-6,
+.col-md-7,
+.col-md-8,
+.col-md-9,
+.col-md-auto,
+.col-sm,
+.col-sm-1,
+.col-sm-10,
+.col-sm-11,
+.col-sm-12,
+.col-sm-2,
+.col-sm-3,
+.col-sm-4,
+.col-sm-5,
+.col-sm-6,
+.col-sm-7,
+.col-sm-8,
+.col-sm-9,
+.col-sm-auto,
+.col-xl,
+.col-xl-1,
+.col-xl-10,
+.col-xl-11,
+.col-xl-12,
+.col-xl-2,
+.col-xl-3,
+.col-xl-4,
+.col-xl-5,
+.col-xl-6,
+.col-xl-7,
+.col-xl-8,
+.col-xl-9,
+.col-xl-auto {
     padding-left: 0.75rem;
     padding-right: 0.75rem;
 }
@@ -1400,12 +1981,12 @@ body[dir="ltr"] .achievement-details li:before {
         min-height: auto;
         padding: 5rem 0 3rem;
     }
-    
+
     .profile-image {
         max-width: 250px;
         margin: 0 auto;
     }
-    
+
     .hobbies-container {
         grid-template-columns: repeat(2, 1fr);
     }
@@ -1420,6 +2001,7 @@ body[dir="ltr"] .achievement-details li:before {
 
 /* تحسينات للوصول والتوافق */
 @media (prefers-reduced-motion: reduce) {
+
     *,
     *::before,
     *::after {
@@ -1427,7 +2009,7 @@ body[dir="ltr"] .achievement-details li:before {
         animation-iteration-count: 1 !important;
         transition-duration: 0.01ms !important;
     }
-    
+
     .floating-element,
     .marquee-track,
     .skill-level:after {
@@ -1437,6 +2019,7 @@ body[dir="ltr"] .achievement-details li:before {
 
 /* تحسينات للطباعة */
 @media print {
+
     .navbar,
     .language-switcher,
     .floating-elements,
@@ -1445,25 +2028,26 @@ body[dir="ltr"] .achievement-details li:before {
     .contact-item i {
         display: none !important;
     }
-    
+
     body {
         font-size: 12pt;
         line-height: 1.5;
     }
-    
+
     .container {
         max-width: 100%;
         padding: 0;
     }
-    
+
     .section-padding {
         padding: 20pt 0;
     }
-    
+
     .hero-section {
         padding: 40pt 0 20pt;
     }
 }
+
 /* إضافة تنسيقات للنسخ التلقائي */
 
 
@@ -1479,7 +2063,7 @@ body[dir="ltr"] .achievement-details li:before {
         margin: 0.5rem auto;
         max-width: 300px;
     }
-    
+
     .copy-notification {
         top: -45px;
         font-size: 0.8rem;
@@ -1492,16 +2076,8 @@ body[dir="ltr"] .achievement-details li:before {
         font-size: 1rem;
         padding: 0.7rem;
     }
-    
+
     .copyable::after {
         font-size: 0.9rem;
     }
 }
-
-
-
-
-
-
-
-

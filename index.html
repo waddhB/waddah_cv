@@ -59,49 +59,67 @@
 </head>
 
 <body>
-  <!-- شاشة التحميل - ضع هذا الكود في بداية body -->
-  <div class="PENCIL_LOADING_SCREEN" id="PENCIL_LOADER_MAIN">
-    <div class="PENCIL_LOADER_WRAPPER">
-      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" class="PENCIL_SVG_MAIN">
-        <defs>
-          <clipPath id="PENCIL_ERASER_MASK">
-            <rect height="30" width="30" ry="5" rx="5"></rect>
-          </clipPath>
-        </defs>
-        <circle transform="rotate(-113,100,100)" stroke-linecap="round" stroke-dashoffset="439.82"
-          stroke-dasharray="439.82 439.82" stroke-width="2" stroke="currentColor" fill="none" r="70"
-          class="PENCIL_STROKE_ANIM"></circle>
-        <g transform="translate(100,100)" class="PENCIL_ROTATE_GROUP">
-          <g fill="none">
-            <circle transform="rotate(-90)" stroke-dashoffset="402" stroke-dasharray="402.12 402.12" stroke-width="30"
-              stroke="hsl(223,90%,50%)" r="64" class="PENCIL_BODY_1"></circle>
-            <circle transform="rotate(-90)" stroke-dashoffset="465" stroke-dasharray="464.96 464.96" stroke-width="10"
-              stroke="hsl(223,90%,60%)" r="74" class="PENCIL_BODY_2"></circle>
-            <circle transform="rotate(-90)" stroke-dashoffset="339" stroke-dasharray="339.29 339.29" stroke-width="10"
-              stroke="hsl(223,90%,40%)" r="54" class="PENCIL_BODY_3"></circle>
-          </g>
-          <g transform="rotate(-90) translate(49,0)" class="PENCIL_ERASER_ANIM">
-            <g class="PENCIL_ERASER_SKEW_ANIM">
-              <rect height="30" width="30" ry="5" rx="5" fill="hsl(223,90%,70%)"></rect>
-              <rect clip-path="url(#PENCIL_ERASER_MASK)" height="30" width="5" fill="hsl(223,90%,60%)"></rect>
-              <rect height="20" width="30" fill="hsl(223,10%,90%)"></rect>
-              <rect height="20" width="15" fill="hsl(223,10%,70%)"></rect>
-              <rect height="20" width="5" fill="hsl(223,10%,80%)"></rect>
-              <rect height="2" width="30" y="6" fill="hsla(223,10%,10%,0.2)"></rect>
-              <rect height="2" width="30" y="13" fill="hsla(223,10%,10%,0.2)"></rect>
-            </g>
-          </g>
-          <g transform="rotate(-90) translate(49,-30)" class="PENCIL_POINT_ANIM">
-            <polygon points="15 0,30 30,0 30" fill="hsl(33,90%,70%)"></polygon>
-            <polygon points="15 0,6 30,0 30" fill="hsl(33,90%,50%)"></polygon>
-            <polygon points="15 0,20 10,10 10" fill="hsl(223,10%,10%)"></polygon>
-          </g>
-        </g>
-      </svg>
+ 
+<div class="PENCIL_LOADING_SCREEN" id="PENCIL_LOADER_MAIN">
+    <div class="PENCIL_LOADER_CONTENT">
+        <div class="PENCIL_LOADER_WRAPPER">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" class="PENCIL_SVG_MAIN">
+                <defs>
+                    <clipPath id="PENCIL_ERASER_MASK">
+                        <rect height="30" width="30" ry="5" rx="5"></rect>
+                    </clipPath>
+                </defs>
+                <circle transform="rotate(-113,100,100)" stroke-linecap="round" 
+                        stroke-dashoffset="439.82" stroke-dasharray="439.82 439.82" 
+                        stroke-width="2" stroke="currentColor" fill="none" r="70" 
+                        class="PENCIL_STROKE_ANIM"></circle>
+                <g transform="translate(100,100)" class="PENCIL_ROTATE_GROUP">
+                    <g fill="none">
+                        <circle transform="rotate(-90)" stroke-dashoffset="402" 
+                                stroke-dasharray="402.12 402.12" stroke-width="30" 
+                                stroke="hsl(223,90%,50%)" r="64" class="PENCIL_BODY_1"></circle>
+                        <circle transform="rotate(-90)" stroke-dashoffset="465" 
+                                stroke-dasharray="464.96 464.96" stroke-width="10" 
+                                stroke="hsl(223,90%,60%)" r="74" class="PENCIL_BODY_2"></circle>
+                        <circle transform="rotate(-90)" stroke-dashoffset="339" 
+                                stroke-dasharray="339.29 339.29" stroke-width="10" 
+                                stroke="hsl(223,90%,40%)" r="54" class="PENCIL_BODY_3"></circle>
+                    </g>
+                    <g transform="rotate(-90) translate(49,0)" class="PENCIL_ERASER_ANIM">
+                        <g class="PENCIL_ERASER_SKEW_ANIM">
+                            <rect height="30" width="30" ry="5" rx="5" 
+                                  fill="hsl(223,90%,70%)"></rect>
+                            <rect clip-path="url(#PENCIL_ERASER_MASK)" height="30" 
+                                  width="5" fill="hsl(223,90%,60%)"></rect>
+                            <rect height="20" width="30" 
+                                  fill="hsl(223,10%,90%)"></rect>
+                            <rect height="20" width="15" 
+                                  fill="hsl(223,10%,70%)"></rect>
+                            <rect height="20" width="5" 
+                                  fill="hsl(223,10%,80%)"></rect>
+                            <rect height="2" width="30" y="6" 
+                                  fill="hsla(223,10%,10%,0.2)"></rect>
+                            <rect height="2" width="30" y="13" 
+                                  fill="hsla(223,10%,10%,0.2)"></rect>
+                        </g>
+                    </g>
+                    <g transform="rotate(-90) translate(49,-30)" class="PENCIL_POINT_ANIM">
+                        <polygon points="15 0,30 30,0 30" 
+                                 fill="hsl(33,90%,70%)"></polygon>
+                        <polygon points="15 0,6 30,0 30" 
+                                 fill="hsl(33,90%,50%)"></polygon>
+                        <polygon points="15 0,20 10,10 10" 
+                                 fill="hsl(223,10%,10%)"></polygon>
+                    </g>
+                </g>
+            </svg>
+        </div>
+        <div class="PENCIL_TEXT_CONTAINER">
+            <h2 class="PENCIL_LOADING_TEXT" id="PENCIL_LOADER_TEXT">جاري التحميل...</h2>
+            <p class="PENCIL_LOADING_SUBTEXT">يرجى الانتظار</p>
+        </div>
     </div>
-    <h2 class="PENCIL_LOADING_TEXT" id="PENCIL_LOADER_TEXT">جاري التحميل...</h2>
-    <p class="PENCIL_LOADING_SUBTEXT">يرجى الانتظار</p>
-  </div>
+</div>
   <nav class="navbar navbar-expand-lg fixed-top">
     <div class="container">
       <a class="navbar-brand" href="#" data-en="Waddah Bassah">وضاح بصه</a>
