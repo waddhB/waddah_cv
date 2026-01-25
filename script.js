@@ -1,3 +1,121 @@
+// PENCIL LOADER - JavaScript معزول
+(function() {
+    'use strict';
+    
+    // المتغيرات الداخلية
+    var PENCIL_LOADER_ELEMENT = null;
+    var PENCIL_TEXT_ELEMENT = null;
+    var PENCIL_MESSAGE_INTERVAL = null;
+    var PENCIL_IS_INITIALIZED = false;
+    
+    // رسائل التحميل
+    var PENCIL_MESSAGES = [
+        "جاري تحميل الموقع...",
+        "جاري إعداد المحتوى...",
+        "جاري تحميل الصور...",
+        "جاري تهيئة البيانات...",
+        "شكراً لانتظارك!"
+    ];
+    
+    // دالة التهيئة
+    function PENCIL_INIT_LOADER() {
+        if (PENCIL_IS_INITIALIZED) return;
+        
+        PENCIL_LOADER_ELEMENT = document.getElementById('PENCIL_LOADER_MAIN');
+        PENCIL_TEXT_ELEMENT = document.getElementById('PENCIL_LOADER_TEXT');
+        
+        if (!PENCIL_LOADER_ELEMENT) {
+            console.warn('PENCIL LOADER: لم يتم العثور على عنصر شاشة التحميل');
+            return;
+        }
+        
+        PENCIL_IS_INITIALIZED = true;
+        
+        // بدء تغيير الرسائل
+        PENCIL_START_MESSAGES();
+        
+        // إخفاء تلقائي بعد تحميل الصفحة
+        window.addEventListener('load', function() {
+            setTimeout(PENCIL_HIDE_LOADER, 800);
+        });
+        
+        // خيار: إخفاء بعد 10 ثواني كحد أقصى (فالسة أمان)
+        setTimeout(function() {
+            if (PENCIL_IS_INITIALIZED && 
+                !PENCIL_LOADER_ELEMENT.classList.contains('PENCIL_LOADER_HIDDEN')) {
+                PENCIL_HIDE_LOADER();
+            }
+        }, 10000);
+    }
+    
+    // بدء تغيير الرسائل
+    function PENCIL_START_MESSAGES() {
+        if (!PENCIL_IS_INITIALIZED || !PENCIL_TEXT_ELEMENT) return;
+        
+        var PENCIL_MESSAGE_INDEX = 0;
+        
+        // تنظيف أي فاصل سابق
+        if (PENCIL_MESSAGE_INTERVAL) {
+            clearInterval(PENCIL_MESSAGE_INTERVAL);
+        }
+        
+        // تعيين الرسالة الأولى
+        PENCIL_TEXT_ELEMENT.textContent = PENCIL_MESSAGES[PENCIL_MESSAGE_INDEX];
+        
+        // بدء الفاصل الزمني لتغيير الرسائل
+        PENCIL_MESSAGE_INTERVAL = setInterval(function() {
+            PENCIL_MESSAGE_INDEX = (PENCIL_MESSAGE_INDEX + 1) % PENCIL_MESSAGES.length;
+            if (PENCIL_TEXT_ELEMENT) {
+                PENCIL_TEXT_ELEMENT.textContent = PENCIL_MESSAGES[PENCIL_MESSAGE_INDEX];
+            }
+        }, 1200);
+    }
+    
+    // إظهار شاشة التحميل
+    function PENCIL_SHOW_LOADER() {
+        if (!PENCIL_IS_INITIALIZED) PENCIL_INIT_LOADER();
+        
+        if (PENCIL_LOADER_ELEMENT) {
+            PENCIL_LOADER_ELEMENT.classList.remove('PENCIL_LOADER_HIDDEN');
+            PENCIL_START_MESSAGES();
+        }
+    }
+    
+    // إخفاء شاشة التحميل
+    function PENCIL_HIDE_LOADER() {
+        if (!PENCIL_IS_INITIALIZED) return;
+        
+        if (PENCIL_LOADER_ELEMENT) {
+            PENCIL_LOADER_ELEMENT.classList.add('PENCIL_LOADER_HIDDEN');
+            
+            // إيقاف تغيير الرسائل
+            if (PENCIL_MESSAGE_INTERVAL) {
+                clearInterval(PENCIL_MESSAGE_INTERVAL);
+                PENCIL_MESSAGE_INTERVAL = null;
+            }
+        }
+    }
+    
+    // تهيئة تلقائية عند تحميل DOM
+    document.addEventListener('DOMContentLoaded', PENCIL_INIT_LOADER);
+    
+    // جعل الدوال متاحة عالمياً
+    window.PENCIL_LOADER = {
+        show: PENCIL_SHOW_LOADER,
+        hide: PENCIL_HIDE_LOADER,
+        init: PENCIL_INIT_LOADER,
+        setMessages: function(messages) {
+            if (Array.isArray(messages) && messages.length > 0) {
+                PENCIL_MESSAGES = messages;
+                if (PENCIL_IS_INITIALIZED) {
+                    PENCIL_START_MESSAGES();
+                }
+            }
+        }
+    };
+    
+})();
+
 document.addEventListener('DOMContentLoaded', function() {
     gsap.registerPlugin(ScrollTrigger);
         gsap.from('.navbar', {
